@@ -17,14 +17,14 @@ lang: en
 content_lang: ''
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
+timezone: Asia/Tokyo
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Chirpy                          # the main title
+title: Blog                          # the main title
 
-tagline: A text-focused Jekyll theme   # it will display as the sub-title
+tagline: My Tech Journal   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, portfolio, sidebar,
@@ -35,7 +35,7 @@ description: >-                        # used by seo meta and the atom feed
 url: ''
 
 github:
-  username: github_username             # change to your github username
+  username: MartinP7r             # change to your github username
 
 twitter:
   username: twitter_username            # change to your twitter username

@@ -45,13 +45,13 @@ social:
   email: dev@martin.pfundmair.de             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username      # change to your twitter homepage
-    - https://github.com/username       # change to your github homepage
+    - https://twitter.com/MartinP7r      # change to your twitter homepage
+    - https://github.com/MartinP7r       # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
 
-google_site_verification: google_meta_tag_verification # change to your verification string
+google_site_verification: RrCAEfnwTGjwtHxccTzlh8Wan6FRLoPaSuxqGHpajh4 # change to your verification string
 
 # ↑ --------------------------
 

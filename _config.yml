@@ -95,9 +95,12 @@ disqus:
 
 paginate: 10
 
+highilighter: rouge
+markdown: kramdown
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:
+  input: GFM
   syntax_highlighter: rouge
   syntax_highlighter_opts:   # Rouge Options › https://github.com/jneen/rouge#full-options
     css_class: highlight

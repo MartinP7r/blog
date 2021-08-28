@@ -24,7 +24,7 @@ timezone: Asia/Tokyo
 
 title: Blog                          # the main title
 
-tagline: My Tech Journal   # it will display as the sub-title
+tagline: Martin's Tech Journal   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   Random articles about Swift, iOS, tooling, web dev and more
@@ -84,7 +84,8 @@ theme_mode:   # [light|dark]
 img_cdn: ''
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg
+# avatar: https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg
+avatar: /assets/img/avatar.png
 
 # boolean type, the global switch for ToC in posts.
 toc: true
@@ -97,6 +98,8 @@ paginate: 10
 
 highilighter: rouge
 markdown: kramdown
+
+plugins: ['jekyll-twitter-plugin']
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:

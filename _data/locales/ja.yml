@@ -18,7 +18,7 @@ tabs:
 
 # text displayed in the search bar
 search:
-  hint: search
+  hint: Suche
   cancel: Cancel
 
 panel:

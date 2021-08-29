@@ -3,7 +3,6 @@ layout: post
 title: SwiftUI Tabbed Page View
 date: 2021-08-28 13:18 +0900
 ---
-
 As a small challenge I wanted to build a *tabbed* PageView for my current pet project.
 
 The basic implementation of SwiftUI's `TabView` allows us to set the style to `PageTabViewStyle` like

@@ -4,8 +4,8 @@ gem "jekyll"
 gem "jekyll-theme-chirpy", "~> 4.1", ">= 4.1.0"
 
 group :jekyll_plugins do
-  # If you have any plugins, put them here!
-  # gem "jekyll-xxx", "~> x.y"
+  gem "jekyll-twitter-plugin", "~> 2.1"
+  gem 'jekyll-compose'
 end
 
 group :test do
@@ -22,4 +22,3 @@ end
 # Performance-booster for watching directories on Windows
 gem "wdm", "~> 0.1.1", :install_if => Gem.win_platform?
 
-gem "jekyll-twitter-plugin", "~> 2.1"

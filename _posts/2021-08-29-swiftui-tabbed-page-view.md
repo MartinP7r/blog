@@ -2,6 +2,7 @@
 layout: post
 title: SwiftUI Tabbed Page View
 date: 2021-08-28 13:18 +0900
+tags: swift swiftui ios
 ---
 As a small challenge I wanted to build a *tabbed* PageView for my current pet project.
 
@@ -126,4 +127,7 @@ Multiple inserted views in matched geometry group Pair<String, ID>(first: "selec
 second: SwiftUI.Namespace.ID(id: 378)) have `isSource: true`, results are undefined.
 ```
 
+## Tell me what you think
 
+If you have any questions, remarks or ideas I'd be happy to hear about them.  
+You can find me on Twitter: [@MartinP7r](https://twitter.com/martinp7r)

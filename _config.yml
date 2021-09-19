@@ -22,21 +22,21 @@ timezone: Asia/Tokyo
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Blog                          # the main title
+title: Martin's Tech Journal
 
-tagline: Martin's Tech Journal   # it will display as the sub-title
+tagline: Notes about my projects
 
-description: >-                        # used by seo meta and the atom feed
-  Random articles about Swift, iOS, tooling, web dev and more
+description: >-                  
+  Mostly random posts about development and tooling in Swift, iOS, web and more
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: ''
+url: 'https://blog.martinP7r.com'
 
 github:
   username: MartinP7r             # change to your github username
 
 twitter:
-  username: twitter_username            # change to your twitter username
+  username: MartinP7r            # change to your twitter username
 
 social:
   # Change to your full name.

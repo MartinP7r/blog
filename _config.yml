@@ -99,7 +99,9 @@ paginate: 10
 highilighter: rouge
 markdown: kramdown
 
-plugins: ['jekyll-twitter-plugin']
+plugins: 
+ - jekyll-twitter-plugin
+ - premonition
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:

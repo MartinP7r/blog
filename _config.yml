@@ -100,7 +100,7 @@ highilighter: rouge
 markdown: kramdown
 
 plugins: 
- - jekyll-twitter-plugin
+#  - jekyll-twitter-plugin
  - premonition
 # ------------ The following options are not recommended to be modified ------------------
 

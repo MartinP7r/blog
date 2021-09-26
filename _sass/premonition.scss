@@ -1,4 +1,4 @@
-$default-color: #5bc0de;
+$default-color: #bfbfbf; // #5bc0de;
 $default-light-color: #e3edf2;
 $info-color: #50af51;
 $info-light-color: #f3f8f3;
@@ -6,7 +6,7 @@ $warning-color: #f0ad4e;
 $warning-light-color: #fcf8f2;
 $error-color: #d9534f;
 $error-light-color: #fdf7f7;
-$content-color: rgba(0, 0, 0, 0.5);
+$content-color: #bfbfbf; // rgba(0, 0, 0, 0.5);
 $citation-color: #495057;
 $citation-light-color: #f8f9fa;
 
@@ -17,13 +17,15 @@ $svg-error-color: "d9534f";
 $svg-citation-color: "495057";
 
 .premonition {
+  @extend %code-snippet-radius;
+  @extend %code-snippet-bg;
   display: grid;
   grid-template-columns: 43px auto;
   padding-top: 13px;
   padding-bottom: 13px;
   margin: 30px 0 30px 0;
-  background-color: $default-light-color;
-  border-left: 4px solid $default-color;
+  // background-color: $default-light-color;
+  // border-left: 4px solid $default-color;
   color: $default-color;
 
   code {
@@ -50,7 +52,7 @@ $svg-citation-color: "495057";
   }
 
   @mixin box-type($c, $lc) {
-    background-color: $lc;
+    // background-color: $lc;
     color: $c;
     border-color: $c;
 

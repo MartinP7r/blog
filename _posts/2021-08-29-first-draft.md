@@ -34,9 +34,13 @@ I will be migrating my first couple of posts from my wordpress blog over here.
 | and  | some        | more    |
 | and  | then        | some    |
 
+```
+Some text in code
+block
+```
 
 ```swift
-// Some piece of code
+// Some piece of code in Swift syntax highlighted
 func hoge(a: String) -> Int? {
   return nil
 }
@@ -48,11 +52,19 @@ and some `inline code` highlighting.
 
 ![imae](/assets/img/avatar.png)
 
+### callout type boxes
+
+> info "I am some info"
+> The body of the info box goes here. Premonition allows you to write any `Markdown` inside the block.
+
+> note ""
+> No headers in here
+
 ### SNS integration
 
 #### Twitter Plugin
 
-{% twitter https://twitter.com/twostraws/status/1404797182667071493 %}
+removed because it uses cookies
 
 #### GitHub
 

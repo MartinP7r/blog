@@ -96,7 +96,7 @@ disqus:
 
 paginate: 10
 
-highilighter: rouge
+highlighter: rouge
 markdown: kramdown
 
 plugins: 

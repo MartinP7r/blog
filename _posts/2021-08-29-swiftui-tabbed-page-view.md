@@ -1,6 +1,7 @@
 ---
 layout: post
 title: SwiftUI Tabbed Page View
+category: Articles
 date: 2021-08-28 13:18 +0900
 tags: swift swiftui ios
 ---

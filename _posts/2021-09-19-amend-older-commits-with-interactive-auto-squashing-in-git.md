@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Amend older commits with interactive auto-squashing in Git
+category: [Snippets]
 tags: git tools
 date: 2021-09-18 17:59 +0900
 ---
@@ -17,12 +18,14 @@ Given some commit history
 * c4c839c - Commit 1 (60 minutes ago) <Me>
 ```
 
-> Hint: the easy-on-the-eyes history graph above can be produced using the glol alias provided by oh-my-zsh, which expands to `git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'`.
+> info ""
+> the easy-on-the-eyes history graph above can be produced using the `glol` alias provided by **oh-my-zsh**, which expands to
+> `git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'`.
 
 Where I want to add some changes to `Commit 2` I can use
 
 ```sh
-# stage the changes you want to make to commit 
+# stage the changes you want to commit 
 git commit -m "fixup! 9cf741e"
 # interactive rebase with autosquash
 git rebase e8adec4^ -i --autosquash

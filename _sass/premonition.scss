@@ -85,6 +85,12 @@ $svg-citation-color: "495057";
     }
   }
 
+  .blockquote-footer {
+    height: inherit !important;
+    position: inherit;
+    background-color: inherit;
+  }
+
   .fa,
   .fas,
   .far,

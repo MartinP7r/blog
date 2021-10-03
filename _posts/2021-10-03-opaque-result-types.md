@@ -1,15 +1,16 @@
 ---
 layout: post
 title: Opaque Result Types
-category: [Summaries, SwiftUI]
+category:
+- Summaries
+- SwiftUI
 tags: swift
 date: 2021-10-02 17:51 +0900
 ---
-
 [SE-0244](https://github.com/apple/swift-evolution/blob/master/proposals/0244-opaque-result-types.md) enables generic protocols to be used as return types.  
 (i.e. ones that have associated types or references to `Self`)
 
-This means that given a protocol with associated type, such as:
+This means that given a protocol with an associated type, such as:
 
 ```swift
 protocol SomeProtocol {
@@ -31,7 +32,7 @@ struct B: SomeProtocol {
 }
 ```
 
-... we can now use these implementations interchangably as returned types for `OtherType` as long as we mark the return type in the function signature with the `some` keyword:
+... we can now use these implementations interchangebly as returned types for `OtherType` as long as we mark the return type in the function signature with the `some` keyword:
 
 ```swift
 func foo() -> some SomeProtocol {
@@ -46,12 +47,12 @@ foo().someFunction() // 1234
 bar().someFunction() // ABCD
 ```
 
-Without the use of `some` as above the compiler would throw a much disliked error that's often seen when working with generic types:  
+Without the use of `some` the compiler would throw a much-disliked error that's often seen when working with generic types:  
 `Protocol 'SomeProtocol' can only be used as a generic constraint because it has Self or associated type requirements`
 
 ## Bigger picture
 
-For **SwiftUI** this is what enables the *Result Builders* behind `VStack`, `Group`, or any `body` property of a SwiftUI `View` to return different variants of the same protocol.  
+For **SwiftUI** this is one concept that powers the *Result Builders* behind `VStack`, `Group`, or any `body` property of a SwiftUI `View` to return different variants of the same protocol.  
 `some View` as a return type allows the use of any type that conforms to the generic protocol `View`.  
 May it be `TupleView<(Text, Text)>` or `TupleView<(Text, Text, Text)>`.
 

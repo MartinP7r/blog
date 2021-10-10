@@ -10,7 +10,7 @@ category: Articles
 
 When implementing MVVM with SwiftUI and Combine, we often use an `ObservableObject` as the **V**iew**M**odel. 
 
-As an example, imagine a view with a `TextField` and a `Text` view that displays the latest value of the `TextField` with more than 3 characters. 
+As an example, imagine a view with a `TextField` and a `Text` view that displays the latest value of the `TextField` with more than three characters. 
 
 ```swift
 import Combine
@@ -89,7 +89,7 @@ Having the `Binding` in the view is not very pretty.
 
 ## Strange Errors
 
-I came across this [@Input](https://www.swiftbysundell.com/articles/connecting-and-merging-combine-publishers-in-swift/) property wrapper I found on the [Swift By Sundell Blog](https://www.swiftbysundell.com) which is intended to solve exactly the problem we stated above.
+I came across this [@Input](https://www.swiftbysundell.com/articles/connecting-and-merging-combine-publishers-in-swift/) property wrapper on the [Swift By Sundell Blog](https://www.swiftbysundell.com) which is intended to solve exactly the problem we stated above.
 
 ```swift
 @propertyWrapper

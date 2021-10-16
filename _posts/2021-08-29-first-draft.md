@@ -2,19 +2,25 @@
 layout: post
 title:  "First Post"
 date:   2021-08-25 10:30:00 +0900
+mermaid: true
+image:
+  src: /assets/img/avatar.png
+  width: 200 #1000   # in pixels
+  height: 200 #400   # in pixels
+  alt: image alternative text
 ---
 
 # First Post
-
+ 
 Hi there,
 
 this is more a repost than a post, but since I haven't done much with the previous version of this blog, I think it still counts. 😅
 
 I've decided to start writing more about the things that I jot down while learning about new technologies and API and while developing my pet projects.  
 
-For one, this hopefully helps me to improve on my technical English writing skill.  
+For one, this hopefully helps me to improve my technical English writing skill.  
 
-And also, writing a somewhat understandable blog post requires me to think more deeply about the matter at hand, improving my understanding and retention of the material. Hopefully.
+Also, writing a somewhat understandable blog post requires me to think more deeply about the matter at hand, and therefore will hopefully improve my understanding and retention of the material.
 
 ## Migrating to Jekyll
 
@@ -50,18 +56,25 @@ Some text in code
 block
 ```
 
+```terminal
+cd some/dir
+python some.py
+```
+
 ```swift
 // Some piece of code in Swift syntax highlighted
 func hoge(a: String) -> Int? {
   return nil
 }
 ```
+{: file="Some/AwesomeFile.swift" }
 
 and some `inline code` highlighting.
 
 ### Asset integration
 
 ![imae](/assets/img/avatar.png)
+_with caption_
 
 ### callout type boxes
 
@@ -91,3 +104,23 @@ removed because it uses cookies
 
 #### GitHub
 
+
+#### Mermaid diagrams
+
+```mermaid
+stateDiagram-v2
+[*] --> Still
+Still --> [*]
+Still --> Moving
+Moving --> Still
+Moving --> Crash
+Crash --> [*]
+```
+
+```mermaid
+ gantt
+  title  Adding GANTT diagram functionality to mermaid
+  apple :a, 2017-07-20, 1w
+  banana :crit, b, 2017-07-23, 1d
+  cherry :active, c, after b a, 1d
+```

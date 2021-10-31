@@ -73,7 +73,7 @@ and some `inline code` highlighting.
 
 ### Asset integration
 
-![imae](/assets/img/avatar.png)
+![image](/assets/img/avatar.png)
 _with caption_
 
 ### callout type boxes

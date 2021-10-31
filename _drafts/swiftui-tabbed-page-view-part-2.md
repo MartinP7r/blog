@@ -40,3 +40,7 @@ Ideally something similar
 getting a weird error
 
 `AttributeGraph precondition failure: attribute being read has no value: 357912.`
+
+
+
+We actually only need to provide a @ViewBuilder closure containing the relevant Views for our tabs with their corresponding tags

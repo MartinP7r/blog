@@ -89,7 +89,7 @@ Having the `Binding` in the view is not very pretty.
 
 ## Strange Errors
 
-I came across this [@Input](https://www.swiftbysundell.com/articles/connecting-and-merging-combine-publishers-in-swift/) property wrapper on the [Swift By Sundell Blog](https://www.swiftbysundell.com) which is intended to solve exactly the problem we stated above.
+I came across this [@Input](https://www.swiftbysundell.com/articles/connecting-and-merging-combine-publishers-in-swift/) property wrapper on the [Swift By Sundell Blog](https://www.swiftbysundell.com) which intends to solve precisely the problem we stated above.
 
 ```swift
 @propertyWrapper

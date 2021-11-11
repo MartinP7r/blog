@@ -76,6 +76,11 @@ Most of these are not limited to fish, but general shell software packages.
 
 ### [zoxide](https://github.com/ajeetdsouza/zoxide) replacing `cd`
 
+A smart directory changer that remembers and ranks visited paths, allowing you to use shortcuts when you want to go there again.
+
+E.g. just typing `z project` when you want to navigate to `/some/folder/of/some/project`.
+
+
 ### [bottom](https://github.com/ClementTsang/bottom) replacing `top`
 
 Hilarious naming.  

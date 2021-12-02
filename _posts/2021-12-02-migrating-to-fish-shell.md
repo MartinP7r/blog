@@ -7,12 +7,12 @@ tags:
 - tools
 - shell
 ---
-`zsh` enhanced by [ohy-my-zsh](https://ohmyz.sh) has been my shell of choice for the longest time.  
+
+`zsh` enhanced by [oh-my-zsh](https://ohmyz.sh) has been my shell of choice for the longest time.  
 Partly because of its functionality and vast plugin eco-system, but quite frankly, also because of the time I had sunk into customizing it to my requirements.
 
-So, I might be a little late to the party, but I've decided to give the very popular fish shell a shot.  
-
-Below I've summarized some of the features and other software I've started using in the process of migrating to fish.
+So, I might be a little late to the party, but I've decided to give the very popular fish shell a shot.
+Below I summarized some of the features and other software I've started using in the process of migrating to fish.
 
 > warning "" 
 > This article is likely to change over time as I might be adding or replacing the tools I'm using.

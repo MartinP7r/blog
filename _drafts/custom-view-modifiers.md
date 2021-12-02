@@ -2,8 +2,8 @@
 layout: post
 title: Custom View Modifiers
 date: 2021-10-16 21:40 +0900
-categories: [Summaries SwiftUI]
-tags: [swift swiftui]
+categories: [Summaries, SwiftUI]
+tags: [swift, swiftui]
 ---
 
 Types that conform to the `ViewModifier` protocol take a `View`, modify it in some way, and return the resulting view.

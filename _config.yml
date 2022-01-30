@@ -74,7 +74,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode:   # [light|dark]
+theme_mode: dark 
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
@@ -134,6 +134,9 @@ defaults:
       # DO NOT modify the following parameter unless you are confident enough
       # to update the code of all other post links in this project.
       permalink: /posts/:title/
+      # author:
+      #   name: Martin
+      #   link: https://twitter.com/MartinP7r 
   -
     scope:
       path: _drafts
@@ -182,3 +185,21 @@ jekyll-archives:
 
 # Outdated configuration warning
 outdated: '-- Missing configuration options! --'
+
+jekyll_compose:
+  default_front_matter:
+    drafts:
+      # description:
+      # author:
+      #   name: Martin
+      #   link: https://twitter.com/MartinP7r 
+      # image:
+      category:
+      tags:
+    # posts:
+      # description:
+      # image:
+      # category:
+      # tags:
+      # published: false
+      # sitemap: false

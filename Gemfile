@@ -6,6 +6,8 @@ gem "jekyll-theme-chirpy", "~> 5.0", ">= 5.0.0"
 group :jekyll_plugins do
   # gem "jekyll-twitter-plugin", "~> 2.1"
   gem 'jekyll-compose'
+  gem 'jekyll-sitemap'
+  # gem 'jekyll-assets'
   gem 'premonition'
 end
 

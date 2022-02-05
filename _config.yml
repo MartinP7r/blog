@@ -149,7 +149,7 @@ defaults:
     values:
       layout: page
       permalink: /:title/
-      dynamic_title: true    # Hide title in mobile screens.
+      # dynamic_title: true    # Hide title in mobile screens.
 
 sass:
   style: compressed
@@ -172,7 +172,7 @@ exclude:
   - LICENSE
   - gulpfile.js
   - node_modules
-  - '*.json'
+  - package*.json
 
 jekyll-archives:
   enabled: [categories, tags]

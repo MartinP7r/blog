@@ -88,7 +88,7 @@ struct TabMenu: View {
 ```
 
 Ideally, I would create something similar for managing the focused state of the app.  
-After all, my keyboard shortcut is intended to be used from anywhere in the app.
+After all, my keyboard shortcut is intended for use from anywhere in the app.
 
 ```swift
 
@@ -98,6 +98,32 @@ However,
 
 ```
 [SwiftUI] Accessing FocusState's value outside of the body of a View. This will result in a constant Binding of the initial value and will not update.
+```
+
+## Current solution
+
+```swift
+private struct SearchShortcutModifier: ViewModifier {
+  @EnvironmentObject var tabMenuState: TabMenuState
+  @FocusState private var isSearchFieldFocused: Bool
+
+  func focusSearch() {
+    tabMenuState.selectedTab = .search
+    isSearchFieldFocused = true
+  }
+
+  func body(content: Content) -> some View {
+    ZStack {
+
+      Button(action: focusSearch, label: { Text("Search") })
+          .keyboardShortcut("f", modifiers: [.command])
+          .hidden()
+
+      content
+          .focused($isSearchFieldFocused)
+    }
+  }
+}
 ```
 
 

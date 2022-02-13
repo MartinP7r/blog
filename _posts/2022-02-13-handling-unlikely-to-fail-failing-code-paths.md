@@ -1,7 +1,6 @@
 ---
 layout: post
-title: >
-    Handling "unlikely to fail" failing code paths
+title: Handling *unlikely to fail* failing code paths
 date: 2022-02-13 13:43 +0900
 category:
 - Summaries

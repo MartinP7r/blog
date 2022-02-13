@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Handling "unlikely to fail" failing code paths
+title: Handling \"unlikely to fail\" failing code paths
 date: 2022-02-13 13:43 +0900
 category:
 - Summaries
@@ -9,6 +9,7 @@ tags:
 - ios
 - swift
 ---
+
 There's situations where a failing code path is there, but under normal circumstances will not happen and therefore should not be handled as if it could.  
 For example, retrieving the url of a file in the app's bundle is something that could potentially fail (if the file is not in the bundle), but should never be an issue in code (because you would have made sure that the file is actually in the bundle...).  
 

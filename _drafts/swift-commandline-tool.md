@@ -9,12 +9,6 @@ date: 2022-01-30 12:46 +0900
 SwiftPM Command Line Tool
 =========================
 
-[Docs](https://github.com/apple/swift-package-manager/tree/main/Documentation)
-- [Creating a Packge](https://github.com/apple/swift-package-manager/blob/main/Documentation/Usage.md#creating-a-package) (CLI tool, etc.)
-
-- https://github.com/apple/swift-argument-parser
-- https://github.com/JohnSundell/Files
-
 Let's first create a package and print the directory list for the current directory.
 
 ```terminal
@@ -26,6 +20,8 @@ $ swift run
 [0/0] Build complete!
 Hello, world! 
 ```
+
+I'm going to use John Sundell's `Files` package for the filesystem interaction, adding it as a dependency in the generated `Package.swift`.
 
 ```swift
 // swift-tools-version:5.5
@@ -41,12 +37,14 @@ let package = Package(
             name: "MyApp",
             dependencies: ["Files"]),
         .testTarget(
-            name: "DaybookGenTests",
+            name: "MyAppTests",
             dependencies: ["MyApp"]),
     ]
 )
 ```
 {: file='Package.swift' }
+
+`main.swift` is the templates entry-point and we'll just replace its `Hello, world!` content with some simple logic to print out the current directory's listing. 
 
 ```swift
 import Files
@@ -55,6 +53,8 @@ for file in try Folder(path: ".").files {
     print(file.name)
 }
 ```
+And take it for a spin:
+
 {: file='Sources/MyApp/main.swift'}
 
 ```terminal
@@ -95,6 +95,19 @@ Swift Argument Parser
 `ArgumentParser` uses property wrappers to declare its parsable parameters.  
 
 If you want to use a different argument label than the variable name, you can specify this via the property wrappers `name` property. For example, having a `date` argument that can also be shortened to `-d`, but
+
+
+Tests
+-----
+
+The package template already created a test target `MyAppTests` in `Package.swift` for us. It contains an example of a functional test case for the template's `Hello, world!` output with.
+
+For 
+
+
+I can recommend having a look at the `TestHelpers` of the [`ArgumentParser` Repository](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift).
+
+
 ---
 
 # Appendix
@@ -123,7 +136,37 @@ CommandLineApp.main()
 ```
 {: file='Sources/MyApp/main.swift'}
 
----
-**Footnotes**
+
+## Parsing Arguments
+
+Nate 
+https://forums.swift.org/t/support-for-date/34797
+
+```swift
+func parseDate(_ formatter: DateFormatter) -> (String) throws -> Date {
+    { arg in
+        guard let date = formatter.date(from: arg) else {
+            throw ValidationError("Invalid date")
+        }
+        return date
+    }
+}
+
+let shortFormatter = DateFormatter()
+shortFormatter.dateStyle = .short
+
+// .....later
+@Argument(transform: parseDate(shortFormatter))
+var date: Date
+```
+
+References
+----------
+
+- [Apple Documentation](https://github.com/apple/swift-package-manager/tree/main/Documentation)
+- [Creating a Packge](https://github.com/apple/swift-package-manager/blob/main/Documentation/Usage.md#creating-a-package) (CLI tool, etc.)
+
+- https://github.com/apple/swift-argument-parser
+- https://github.com/JohnSundell/Files
 
 [^fn-main-swift]: https://developer.apple.com/swift/blog/?id=7

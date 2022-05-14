@@ -35,7 +35,6 @@ category: daybook
 
 **TODO**
 
-- [ ] Move yesterday's unfinished ToDos
 - [ ] Check Mail
 - [ ] Check Schedule
 - [ ] Make Coffee

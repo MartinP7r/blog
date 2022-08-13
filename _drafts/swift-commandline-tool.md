@@ -53,9 +53,9 @@ for file in try Folder(path: ".").files {
     print(file.name)
 }
 ```
-And take it for a spin:
-
 {: file='Sources/MyApp/main.swift'}
+
+And take it for a spin:
 
 ```terminal
 $ swift run
@@ -65,9 +65,9 @@ Package.swift
 README.md
 ```
 
-That was almost too easy and already very exciting.  
+That was really easy and already very exciting.  
 
-Now, if we want to write something more complex than our simple script above, we will need some more structure in our code than just a simple sequential file.  
+Now, if we want to write something more complex than our simple script above, we will need something more than just a simple sequential file.  
 
 In the generated template, the swift compiler uses our source file named `main.swift` as an entry point and simply runs the top-level code it finds within.
 
@@ -89,6 +89,7 @@ struct MyApp {
 
 Alternatively, if you want to keep `main.swift`, you have to implement things yourself.[^fn-main-swift]
 
+
 Swift Argument Parser
 ---------------------
 
@@ -100,14 +101,14 @@ If you want to use a different argument label than the variable name, you can sp
 Tests
 -----
 
-The package template already created a test target `MyAppTests` in `Package.swift` for us. It contains an example of a functional test case for the template's `Hello, world!` output with.
+The package template already created a test target `MyAppTests` in `Package.swift` for us. It contains an example of a functional test case for the template's `Hello, world!` output.
 
-For 
-
+> info
+> In Xcode 14 Swift 5.7 the package struct and test setup are slighly different.  
+> However the new test case seems more like a unit test than a functional test, to be honest...
 
 I can recommend having a look at the `TestHelpers` of the [`ArgumentParser` Repository](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift).
-
-
+Especially [`AssertExecuteCommand(command:, expected:)`](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift#L209-L213), which makes it really easy to execute a command and check for its expected output.
 ---
 
 # Appendix
@@ -139,7 +140,7 @@ CommandLineApp.main()
 
 ## Parsing Arguments
 
-Nate 
+Date 
 https://forums.swift.org/t/support-for-date/34797
 
 ```swift

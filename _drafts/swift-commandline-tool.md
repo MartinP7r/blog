@@ -89,6 +89,10 @@ struct MyApp {
 
 Alternatively, if you want to keep `main.swift`, you have to implement things yourself.[^fn-main-swift]
 
+Subcommands
+-----------
+
+
 
 Swift Argument Parser
 ---------------------
@@ -97,6 +101,23 @@ Swift Argument Parser
 
 If you want to use a different argument label than the variable name, you can specify this via the property wrappers `name` property. For example, having a `date` argument that can also be shortened to `-d`, but
 
+Given a "tomorrow" flag defined with the following name options:
+```swift
+@Flag(name: [.long, .short, .customLong("tmr")])
+var tomorrow = false
+```
+This will enable you use the parameter in one of the following ways.
+```terminal
+$ swift run MyApp --tomorrow
+$ swift run MyApp --tmr
+$ swift run MyApp -t
+```
+
+`swift run MyApp --help` will show the options automatically:
+```swift
+OPTIONS:
+  -t, --tomorrow, --tmr
+```
 
 Tests
 -----
@@ -109,6 +130,16 @@ The package template already created a test target `MyAppTests` in `Package.swif
 
 I can recommend having a look at the `TestHelpers` of the [`ArgumentParser` Repository](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift).
 Especially [`AssertExecuteCommand(command:, expected:)`](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift#L209-L213), which makes it really easy to execute a command and check for its expected output.
+
+```swift
+func test_output() throws {
+    try AssertExecuteCommand(
+        command: "myapp",
+        expected: "Hello, world!"
+    )
+}
+```
+
 ---
 
 # Appendix

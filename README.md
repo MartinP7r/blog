@@ -6,6 +6,13 @@ https://rbuchberger.github.io/jekyll_picture_tag/
 
 ## Usage
 
+```bash
+# first time
+bundle install
+# start local server
+bundle exec jekyll s
+```
+
 Please see the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy#usage).
 
 ## Upgrading

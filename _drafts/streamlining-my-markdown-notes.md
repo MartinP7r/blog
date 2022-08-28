@@ -38,9 +38,9 @@ category: daybook
 
 **TODO**
 
-- [ ] Check Mail
-- [ ] Check Schedule
 - [ ] Make Coffee
+- [ ] Check Mail
+- [ ] Write Blog
 
 Work Log
 ========

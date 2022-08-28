@@ -3,7 +3,7 @@ title: Swift Commandline Tool
 # author:
 #   name: Martin
 #   link: https://twitter.com/MartinP7r 
-date: 2022-01-30 12:46 +0900
+date: 2022-08-25 12:46 +0900
 ---
 
 SwiftPM Command Line Tool
@@ -89,11 +89,6 @@ struct MyApp {
 
 Alternatively, if you want to keep `main.swift`, you have to implement things yourself.[^fn-main-swift]
 
-Subcommands
------------
-
-
-
 Swift Argument Parser
 ---------------------
 
@@ -119,6 +114,36 @@ OPTIONS:
   -t, --tomorrow, --tmr
 ```
 
+### Subcommands
+
+For more complex applications, the ArgumentParser package lets you define [Subcommands](https://apple.github.io/swift-argument-parser/documentation/argumentparser/commandsandsubcommands) as part of the applications configuration.  
+
+E.g. having an additional parameter-like keyword after the application's name, allowing you to group utilities within your application.
+
+This is controlled via a [`CommandConfiguration`](https://apple.github.io/swift-argument-parser/documentation/argumentparser/commandconfiguration) (also provided by `ArgumentParser`) object defined as a static variable on your base `ParsableCommand`.
+
+```swift
+@main
+struct MyApp: ParsableCommand {
+
+    static var configuration = CommandConfiguration(
+        abstract: "My awesome CLI tool.",
+        subcommands: [FirstSubcommand.self, SecondSubcommand.self],
+        defaultSubcommand: FirstSubcommand.self
+    )
+
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+
+    enum Error: Swift.Error {
+        case invalidDate
+    }
+}
+```
+
 Tests
 -----
 
@@ -134,7 +159,7 @@ Especially [`AssertExecuteCommand(command:, expected:)`](https://github.com/appl
 ```swift
 func test_output() throws {
     try AssertExecuteCommand(
-        command: "myapp",
+        command: "MyApp",
         expected: "Hello, world!"
     )
 }

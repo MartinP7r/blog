@@ -44,7 +44,7 @@ let package = Package(
 ```
 {: file='Package.swift' }
 
-`main.swift` is the templates entry-point and we'll just replace its `Hello, world!` content with some simple logic to print out the current directory's listing. 
+`main.swift` is the templates entry-point and we'll just replace its `Hello, world!` content with some simple logic to print out the current directory's listing.
 
 ```swift
 import Files
@@ -67,7 +67,7 @@ README.md
 
 That was really easy and already very exciting.  
 
-Now, if we want to write something more complex than our simple script above, we will need something more than just a simple sequential file.  
+Now, if we want to write something more complex than our simple script above, we will need something more structured than just a simple sequential file.  
 
 In the generated template, the swift compiler uses our source file named `main.swift` as an entry point and simply runs the top-level code it finds within.
 
@@ -94,7 +94,7 @@ Swift Argument Parser
 
 `ArgumentParser` uses property wrappers to declare its parsable parameters.  
 
-If you want to use a different argument label than the variable name, you can specify this via the property wrappers `name` property. For example, having a `date` argument that can also be shortened to `-d`, but
+If you want to use a different argument label than the variable name, you can specify this via the property wrappers `name` property. 
 
 Given a "tomorrow" flag defined with the following name options:
 ```swift
@@ -109,7 +109,7 @@ $ swift run MyApp -t
 ```
 
 `swift run MyApp --help` will show the options automatically:
-```swift
+```terminal
 OPTIONS:
   -t, --tomorrow, --tmr
 ```
@@ -118,7 +118,11 @@ OPTIONS:
 
 For more complex applications, the ArgumentParser package lets you define [Subcommands](https://apple.github.io/swift-argument-parser/documentation/argumentparser/commandsandsubcommands) as part of the applications configuration.  
 
-E.g. having an additional parameter-like keyword after the application's name, allowing you to group utilities within your application.
+E.g. having an additional parameter-like keyword after the application's name, allowing you to group utilities within your application, like:
+
+```terminal
+$ MyApp sub-command parameter
+```
 
 This is controlled via a [`CommandConfiguration`](https://apple.github.io/swift-argument-parser/documentation/argumentparser/commandconfiguration) (also provided by `ArgumentParser`) object defined as a static variable on your base `ParsableCommand`.
 

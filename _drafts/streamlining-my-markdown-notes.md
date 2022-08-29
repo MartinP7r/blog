@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Automating daily file generation with a Swift commandline script
+title: Automating markdown notes generation with a Swift commandline script
 date: 2022-08-26 13:37 +0900
 category: [Articles, Projects]
 tags: [scripts, swift, automation]

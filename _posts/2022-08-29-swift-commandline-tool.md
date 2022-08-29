@@ -1,11 +1,7 @@
 ---
 title: Swift Commandline Tool
-# author:
-#   name: Martin
-#   link: https://twitter.com/MartinP7r 
 date: 2022-08-25 12:46 +0900
 ---
-
 SwiftPM Command Line Tool
 =========================
 

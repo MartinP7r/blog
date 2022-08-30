@@ -2,10 +2,14 @@
 layout: post
 title: Bindings and ViewModels in SwiftUI
 date: 2021-10-09 18:19 +0900
-tags: swiftui swift mvvm
-category: Articles
+tags:
+- swiftui
+- swift
+- mvvm
+category:
+- Articles
+- Project
 ---
-
 ## The Problem
 
 When implementing MVVM with SwiftUI and Combine, we often use an `ObservableObject` as the **V**iew**M**odel. 
@@ -118,4 +122,4 @@ For one, it prints many lines of the following message
 Further, the `TextField` itself seems to "stutter" because of it. This becomes especially clear when using Japanese input.
 For example, trying to write の (the kana 'no') will result in nお (n followed by the kana for 'o'), which should normally not happen because 'no' will be automatically transformed to 'の'.
 
-![video](/assets/input_binding_bug.mp4){: width="250" }
+![video](assets/input_binding_bug.mp4){: width="250" }

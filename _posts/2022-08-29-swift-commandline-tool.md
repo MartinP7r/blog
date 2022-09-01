@@ -90,6 +90,30 @@ Swift Argument Parser
 
 `ArgumentParser` uses property wrappers to declare its parsable parameters.  
 
+Popular ones are 
+- `@Argument` for positional command-line arguments
+- `@Option` for optional arguments (with `--` or `-` prefixes)
+- `@Flag` for boolean command-line flags (also with `--` or `-`)
+
+Furthermore this are automatically included in the `--help` documentation of your command-line application.
+
+Then there's also `@OptionGroup` which let's you group multiple such parameters inside a struct (conforming to `ParsableArguments`) for reusability.
+
+Sample from the [documentation](https://apple.github.io/swift-argument-parser/documentation/argumentparser/optiongroup): 
+```swift
+struct GlobalOptions: ParsableArguments {
+    @Flag(name: .shortAndLong)
+    var verbose: Bool
+
+    @Argument var values: [Int]
+}
+
+struct Options: ParsableArguments {
+    @Option var name: String
+    @OptionGroup var globals: GlobalOptions
+}
+```
+
 If you want to use a different argument label than the variable name, you can specify this via the property wrappers `name` property. 
 
 Given a "tomorrow" flag defined with the following name options:

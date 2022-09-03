@@ -78,23 +78,17 @@ _with caption_
 
 ### callout type boxes
 
-> info "I am some info"
-> The body of the info box goes here. Premonition allows you to write any `Markdown` inside the block.
+> The body of the info box goes here.  You can write `Markdown` inside the block.
+{: .prompt-info }
 
-> note ""
-> No headers in here
+> The body of the tip goes here.  You can write `Markdown` inside the block.
+{: .prompt-tip }
 
-> note "I am a note"
-> The body of the note goes here. Premonition allows you to write any `Markdown` inside the block.
+> The body of the warning box goes here.  You can write `Markdown` inside the block.
+{: .prompt-warning }
 
-> warning "I am a warning"
-> The body of the warning box goes here. Premonition allows you to write any `Markdown` inside the block.
-
-> error "I am an error"
-> The body of the error box goes here. Premonition allows you to write any `Markdown` inside the block.
-
-> citation "Mark Twain" [ cite = "mt" ]
-> I will be a beautiful citation quote
+> The body of the danger box goes here.  You can write `Markdown` inside the block.
+{: .prompt-danger }
 
 ### SNS integration
 

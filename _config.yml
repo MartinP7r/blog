@@ -128,7 +128,6 @@ highlighter: rouge
 markdown: kramdown
 
 plugins:
-  - premonition
   #  - jekyll-twitter-plugin
   - jekyll-sitemap
 # ------------ The following options are not recommended to be modified ------------------

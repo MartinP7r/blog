@@ -14,8 +14,8 @@ Partly because of its functionality and vast plugin eco-system, but quite frankl
 So, I might be a little late to the party, but I've decided to give the very popular fish shell a shot.
 Below I summarized some of the features and other software I've started using in the process of migrating to fish.
 
-> warning "" 
 > This article is likely to change over time as I might be adding or replacing the tools I'm using.
+{: .prompt-warning }
 
 ## Basics
 
@@ -54,8 +54,8 @@ Which you can see by listing command completions via `tab`:
 There are lots of ways to customize the prompt in fish, even within fish itself.
 I've settled with [starship](https://github.com/starship/starship) for now. It's written in Rust and very customizable, fast, and usable with many different shells. Not only fish.
 
-> info ""
 > Judging by the name and general appearance, starship seems to be inspired by the [spaceship](https://github.com/spaceship-prompt/spaceship-prompt) prompt for zsh.
+{: .prompt-info }
 
 Here's what my current setup looks like:
 
@@ -84,8 +84,8 @@ Most of these are not limited to fish, but general shell software packages.
 
 ![exa](/../assets/img/fish_exa.png)
 
-> info ""
 > The `LS_COLORS` settings seen above are generated via [vivid](https://github.com/sharkdp/vivid).
+{: .prompt-tip }
 
 ### [dust](https://github.com/bootandy/dust) replacing `du`
 

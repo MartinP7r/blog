@@ -18,9 +18,9 @@ Given some commit history
 * c4c839c - Commit 1 (60 minutes ago) <Me>
 ```
 
-> info ""
 > the easy-on-the-eyes history graph above can be produced using the `glol` alias provided by **oh-my-zsh**, which expands to
 > `git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'`.
+{: .prompt-tip }
 
 Where I want to add some changes to `Commit 2` I can use
 

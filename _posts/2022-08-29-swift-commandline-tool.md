@@ -2,8 +2,9 @@
 title: Swift Commandline Tool
 date: 2022-08-25 12:46 +0900
 ---
-SwiftPM Command Line Tool
-=========================
+
+> Updated for Swift 5.7 (Xcode 14 beta 5)
+{: .prompt-info }
 
 Let's first create a package and print the directory list for the current directory.
 
@@ -173,9 +174,9 @@ Tests
 
 The package template already created a test target `MyAppTests` in `Package.swift` for us. It contains an example of a functional test case for the template's `Hello, world!` output.
 
-> info
-> In Xcode 14 Swift 5.7 the package struct and test setup are slighly different.  
+> In Xcode 14 Swift 5.7 the package struct and test setup has changed slighly.  
 > However the new test case seems more like a unit test than a functional test, to be honest...
+{: .prompt-info }
 
 I can recommend having a look at the `TestHelpers` of the [`ArgumentParser` Repository](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift).
 Especially [`AssertExecuteCommand(command:, expected:)`](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift#L209-L213), which makes it really easy to execute a command and check for its expected output.

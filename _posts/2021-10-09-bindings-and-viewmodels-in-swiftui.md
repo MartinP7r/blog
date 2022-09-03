@@ -44,10 +44,10 @@ class ViewModel: ObservableObject {
 }
 ```
 
-> info ""
 > `_printChanges()` is a neat addition in iOS 15, which prints the names of the properties that changed and caused the view to refresh. 
 > As well as `@self` when the view itself changed and `@identity` when the identity of the view changed.
 > E.g. it will print `SampleView: @self, @identity, _vm changed.` on init and `SampleView: _vm changed.` every time the view-model forces the view to change.
+{: .prompt-tip }
 
 Anytime a `@Published` property is changed, its ObservableObject notifies the observing view that it needs to refresh.  
 However, in the example above, there's no need to update the view for input values shorter than four characters.

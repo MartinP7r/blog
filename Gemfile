@@ -8,7 +8,6 @@ group :jekyll_plugins do
   gem 'jekyll-compose'
   gem 'jekyll-sitemap'
   # gem 'jekyll-assets'
-  gem 'premonition'
 end
 
 group :test do

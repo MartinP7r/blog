@@ -33,9 +33,9 @@ struct SearchView: View {
   }
 }
 ```
-> note ""
 > The hidden `Button` enables me to have the keyboard shortcut set via SwiftUI without the need for a visible control.  
 > In my case the search kicks of automatically via a debounced `Combine` pipeline on the search fields binding variable.
+{: .prompt-info }
 
 Let's imagine a simple app with a top-level `TabView` navigation, where the view containing the `TextField` is located in the first tab.  
 Even when I use a keyboard shortcut to focus the `TextField` while the `TabView` displays a different tab, the expected behavior would be to change the active tab to the one containing the `TextField`.

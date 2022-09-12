@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Automating markdown notes generation with a Swift commandline script
+title: Automating markdown notes generation with a Swift command-line script
 date: 2022-08-26 13:37 +0900
 category: [Articles, Projects]
 tags: [scripts, swift, automation]
@@ -56,7 +56,7 @@ So I create new files, insert the template, fill in the date, copy unfinished to
 I wanted to automate more of this process. And what better way to procrastinate on my actual projects than writing a shell application from scratch that does all that for me.  
 Ideally I'd just type something like `make daybook` and it generates the new files and folders, moves ToDos if necessary and opens the new daybook file.
 
-Just like in my general Swift Commandline Tool article [LINK], we're going to use an executable swift package.
+Just like in my general Swift Command-Line Tool article [LINK], we're going to use an executable swift package.
 
 ```terminal
 swift package init --type executable

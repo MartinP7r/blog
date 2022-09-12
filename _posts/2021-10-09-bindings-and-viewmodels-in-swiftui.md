@@ -8,7 +8,7 @@ tags:
 - mvvm
 category:
 - Articles
-- Project
+- Projects
 ---
 ## The Problem
 

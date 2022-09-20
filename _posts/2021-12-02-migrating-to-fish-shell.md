@@ -145,6 +145,8 @@ Packages that seem interesting, but I haven't had the time to look at, yet.
 
 - https://github.com/denisidoro/navi
 - https://github.com/extrawurst/gitui
+- https://github.com/dandavison/delta
+- https://github.com/extrawurst/gitui
 
 ## References
 

@@ -10,29 +10,28 @@ tags:
 date: 2022-08-25 12:46 +0900
 ---
 
-> Updated for Swift 5.6 (Xcode 13)
+> Updated for Swift 5.7 (Xcode 14)
 {: .prompt-info }
 
-This article goes through the steps of creating a simple command-line tool and solve for common feature requirements with helpful open-source packages.  
-The tool will provide some functionality to print out information about files and directories on the file system.  
+This article goes through the steps of creating a simple command-line tool and solve common feature requirements with helpful open-source packages.  
+The finished tool will print out information about files and directories on the file system.  
 
-Let's first create a Swift package.
+Let's first create a Swift package:
 
 ```terminal
-$ mkdir MyApp
-$ cd MyApp/
+$ mkdir MyApp && cd MyApp
 $ swift package init --type executable
 $ swift run
 Building for debugging...
 [3/3] Linking MyApp
-Build complete! (1.02s)
-Hello, world!
+Build complete! (0.82s)
+Hello, World!
 ```
 
 I'm going to use John Sundell's [`Files`](https://github.com/JohnSundell/Files) package for filesystem interactions, adding it as a dependency in `Package.swift`.
 
 ```swift
-// swift-tools-version: 5.6
+// swift-tools-version: 5.7
 import PackageDescription
 
 let package = Package(
@@ -52,16 +51,26 @@ let package = Package(
 ```
 {: file='Package.swift' }
 
-`main.swift` is the templates entry-point and for now, we'll replace its `Hello, world!` content with some simple logic to print out the current directory's listing.
+`MyApp.swift` is the templates entry-point and for now, we'll replace its `Hello, world!` content with some simple logic to print out the current directory's listing.
 
 ```swift
 import Files
 
-for file in try Folder(path: ".").files {
-    print(file.name)
+@main
+public struct MyApp {
+
+    public static func main() throws {
+        try MyApp().printFiles()
+    }
+
+    func printFiles() throws {
+        for file in try Folder(path: ".").files {
+            print(file.name)
+        }
+    }
 }
 ```
-{: file='Sources/MyApp/main.swift'}
+{: file='Sources/MyApp/MyApp.swift'}
 
 > Notice that the source files for our executable target reside in `Sources/TARGET_NAME/*`.  
 > If you'd like to have them somewhere else, you need to explicitly specify the `path` parameter for your
@@ -72,10 +81,6 @@ Let's take it for a spin:
 
 ```terminal
 $ swift run
-Fetching (...) 
-Building for debugging...
-[5/5] Linking MyApp
-Build complete! (4.65s)
 Package.resolved
 Package.swift
 README.md
@@ -83,36 +88,50 @@ README.md
 
 That was really easy and already very exciting. 😎
 
-In the generated template, the swift compiler uses our source file named `main.swift` as an entry point and simply runs the top-level code it finds within.
-To be able to better *structure* our project, we can replace this in the followng way:
-
-1. Mark the `struct` with `@main` to tell the compiler that this is the new entry point for our application
-2. Rename the file to something other than `main.swift`
-
-```swift
-@main
-struct MyApp {
-
-    static func main() throws {
-        print("Hello")
-    }
-}
-```
-{: file='Sources/MyApp/MyApp.swift'}
-
-Alternatively, if you want to keep `main.swift`, you have to implement things yourself.[^fn-main-swift]
-
 Swift Argument Parser
 ---------------------
 
-Something that nearly every command-line app has, are arguments and option parameters. Rather than implementing them from scratch, I'm going to use Apple's open-source package. Namely Apple's [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (`ArgumentParser`).
-
-To install this package, add `.package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),`[^fn-latest-sap] to your `Package.swift`'s `dependencies` in the same way as `Files` above.  
+Something that almost every command-line app needs, are arguments and option parameters. Rather than implementing them from scratch, I'm going to use Apple's open-source package [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (`ArgumentParser`).
 
 > An alternative would be [`SwiftCLI`](https://github.com/jakeheis/SwiftCLI.git), which has been around longer, and provides nearly the same functionality.
 {: .prompt-info }
 
+We add `.package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),`[^fn-latest-sap] to `Package.swift`'s `dependencies` in the same way as for `Files` above, but need to specify the exact product we want to add as a dependency for our `executableTarget`, because the product `ArgumentParser` has a different name than the package `swift-argument-parser` and can't be automatically inferred by SPM. 
+
+```swift
+// ...
+.executableTarget(
+    name: "MyApp",
+    dependencies: [
+        "Files",
+        .product(name: "ArgumentParser", package: "swift-argument-parser")
+    ]),
+// ...
+```
+{: file='Package.swift' }
+
+
 We import the module and conform our struct to `ParsableCommand`.
+
+```swift
+import ArgumentParser
+import Files
+
+@main
+struct MyApp: ParsableCommand {
+
+    mutating func run() throws {
+        try printFiles()
+    }
+
+    func printFiles() throws {
+        for file in try Folder(path: ".").files {
+            print(file.name)
+        }
+    }
+}
+```
+{: file='Sources/MyApp/MyApp.swift'}
 
 > `ArgumentParser`'s `ParsableCommand`s have a `run()` method that acts as the entry point for your command instead of a static `main()`
 {: .prompt-info }
@@ -137,7 +156,7 @@ ARGUMENTS:
   <path>                  Path of the directory to be listed (default: .)
 
 OPTIONS:
-  -d, --directories       Include directories
+  -d, --dir, --include-directories       Include directories
   -i, --include-hidden    Include hidden files/directories
   --version               Show the version.
   -h, --help              Show help information.
@@ -146,17 +165,52 @@ OPTIONS:
 > Use `swift run AppName` to be able to use your arguments and parameters when debugging.
 {: .prompt-tip }
 
-If you want to use a different argument label than the variable name, you can specify this via the property wrappers `name` property in various ways. For example, a `directories` flag to toggle whether to include directories in our list, could be defined with the following `name` options:
+We want to pass a filesystem path to our tool, so that we can list files in other directories, too. This argument should have the current directory as a default: 
+
+```swift
+@Argument(help: "Path of the directory to be listed")
+var path: String = "."
+```
+
+We'll also update our code to use this new variable and print out the name of the current folder.
+
+```swift
+mutating func run() throws {
+    print("-- \(try Folder(path: path).name) --")
+    try printFiles()
+}
+
+func printFiles() throws {
+    for file in try Folder(path: path).files {
+        print(file.name)
+    }
+}
+```
+
+```terminal
+$ swift run MyApp Sources/MyApp
+-- MyApp --
+MyApp.swift
+```
+
+We'll also add a parameter to display directories in addition to files in our list.  
+
+```swift
+@Flag(help: "Include directories")
+var includeDirectories: Bool = false
+```
+
+If you want to use a different parameter label than the variable name, you can specify this via the property wrapper's `name` property in various ways. For example, our `--include-directories` flag (`ArgumentParser` will turn it into kebab-case by default) could be set like this:
 
 ```swift
 @Flag(name: [.short, .long, .customLong("dir")])
-var directories = false
+var includeDirectories = false
 ```
 
-This will enable you to use the flag in one of the following ways.
+In order to make the following commands available to the user: 
 
 ```terminal
-$ swift run MyApp --directories
+$ swift run MyApp --include-directories
 $ swift run MyApp --dir
 $ swift run MyApp -d
 ```
@@ -165,10 +219,17 @@ Again, `swift run MyApp --help` will show these options automatically:
 
 ```terminal
 OPTIONS:
-  -d, --directories, --dir
+  -d, --include-directories, --dir
 ```
 
-There's also `@OptionGroup` which let's you compile multiple parameters into a struct (conforming to `ParsableArguments`) for reusability.
+We'll add one more parameter to toggle whether hidden files and directories should be listed.
+
+```swift
+@Flag(name: [.long, .short], help: "Include hidden files/directories")
+var includeHidden: Bool = false
+```
+
+There's also `@OptionGroup` which let's you compile multiple parameters into a struct (conforming to `ParsableArguments`) for reusability, e.g. across multiple `Subcommand`s (which we'll look at next).
 
 Sample from the [documentation](https://apple.github.io/swift-argument-parser/documentation/argumentparser/optiongroup): 
 ```swift
@@ -185,10 +246,18 @@ struct Options: ParsableArguments {
 }
 ```
 
+If you want to use a different argument label than the variable name, you can specify this via the property wrappers `name` property. 
+
+Given a "tomorrow" flag defined with the following name options:
+```swift
+@Flag(name: [.long, .short, .customLong("tmr")])
+var tomorrow = false
+```
+
+This will enable you to use the parameter in one of the following ways.
+
 ```terminal
 $ swift run MyApp --directories
-Building for debugging...
-Build complete! (0.13s)
 -- MyApp --
 [Sources]
 [Tests]

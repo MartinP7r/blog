@@ -10,11 +10,17 @@ tags:
 date: 2022-08-25 12:46 +0900
 ---
 
+Intro
+-----
+
 > Updated for Swift 5.7 (Xcode 14)
 {: .prompt-info }
 
-This article goes through the steps of creating a simple command-line tool and solve common feature requirements with helpful open-source packages.  
+This article walks through the steps of creating a simple command-line tool and solve common feature requirements with helpful open-source packages.  
 The finished tool will print out information about files and directories on the file system.  
+
+Setup
+-----
 
 Let's first create a Swift package:
 
@@ -91,10 +97,12 @@ That was really easy and already very exciting. 😎
 Swift Argument Parser
 ---------------------
 
-Something that almost every command-line app needs, are arguments and option parameters. Rather than implementing them from scratch, I'm going to use Apple's open-source package [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (`ArgumentParser`).
+Something that arguably every command-line app needs, are arguments. Rather than implementing them from scratch, I'm going to use Apple's open-source package [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (I'm referring to this package as `ArgumentParser` below).
 
 > An alternative would be [`SwiftCLI`](https://github.com/jakeheis/SwiftCLI.git), which has been around longer, and provides nearly the same functionality.
 {: .prompt-info }
+
+> If you'd rather roll your own argument parsing solution, you can do so by manually reading them from `CommandLine.arguments.dropFirst()`
 
 We add `.package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),`[^fn-latest-sap] to `Package.swift`'s `dependencies` in the same way as for `Files` above, but need to specify the exact product we want to add as a dependency for our `executableTarget`, because the product `ArgumentParser` has a different name than the package `swift-argument-parser` and can't be automatically inferred by SPM. 
 
@@ -133,13 +141,13 @@ struct MyApp: ParsableCommand {
 ```
 {: file='Sources/MyApp/MyApp.swift'}
 
-> `ArgumentParser`'s `ParsableCommand`s have a `run()` method that acts as the entry point for your command instead of a static `main()`
+> `ArgumentParser`'s `ParsableCommand`s require a `run()` method that acts as the entry point for your command instead of the static `main()`
 {: .prompt-info }
 
 `ArgumentParser` uses property wrappers to declare its parsable parameters.  
 
 - `@Argument` for positional command-line argument
-- `@Option` for optional arguments (with `--` or `-` prefixes)
+- `@Option` for named parameters (with `--` or `-` prefixes)
 - `@Flag` for boolean command-line flags (also with `--` or `-`)
 
 Furthermore, a `--help` (`-h`) documentation for your command-line application is automatically generated.
@@ -150,19 +158,20 @@ For our finished example, it will look like this:
 $ swift run MyApp -h
 OVERVIEW: A neat little tool to list files and directories
 
-USAGE: my-app [<path>] [--directories] [--include-hidden]
+USAGE: my-app list [<path>] [--directories] [--include-hidden] [--filter <filter>]
 
 ARGUMENTS:
   <path>                  Path of the directory to be listed (default: .)
 
 OPTIONS:
-  -d, --dir, --include-directories       Include directories
+  -d, --directories       Include directories
   -i, --include-hidden    Include hidden files/directories
+  -f, --filter <filter>   Filter the list of files and directories
   --version               Show the version.
   -h, --help              Show help information.
 ```
 
-> Use `swift run AppName` to be able to use your arguments and parameters when debugging.
+> Use `swift run AppName` from a terminal in the root directory of your Swift package to quickly debug the arguments and parameters of your application.
 {: .prompt-tip }
 
 We want to pass a filesystem path to our tool, so that we can list files in other directories, too. This argument should have the current directory as a default: 
@@ -222,52 +231,83 @@ OPTIONS:
   -d, --include-directories, --dir
 ```
 
-We'll add one more parameter to toggle whether hidden files and directories should be listed.
+We'll add one more `@Flag` to toggle whether hidden files and directories should be listed.
 
 ```swift
 @Flag(name: [.long, .short], help: "Include hidden files/directories")
 var includeHidden: Bool = false
 ```
 
-There's also `@OptionGroup` which let's you compile multiple parameters into a struct (conforming to `ParsableArguments`) for reusability, e.g. across multiple `Subcommand`s (which we'll look at next).
+Let's also include the third type of command-line parameter, by creating a option to filter the list:
 
-Sample from the [documentation](https://apple.github.io/swift-argument-parser/documentation/argumentparser/optiongroup): 
 ```swift
-struct GlobalOptions: ParsableArguments {
-    @Flag(name: .shortAndLong)
-    var verbose: Bool
-
-    @Argument var values: [Int]
-}
-
-struct Options: ParsableArguments {
-    @Option var name: String
-    @OptionGroup var globals: GlobalOptions
-}
+@Option(name: .shortAndLong, help: "Filter the list of files and directories")
+var filter: String?
 ```
 
-If you want to use a different argument label than the variable name, you can specify this via the property wrappers `name` property. 
 
-Given a "tomorrow" flag defined with the following name options:
 ```swift
-@Flag(name: [.long, .short, .customLong("tmr")])
-var tomorrow = false
-```
+@main
+struct MyApp: ParsableCommand {
 
-This will enable you to use the parameter in one of the following ways.
+    @Argument(help: "Path of the directory to be listed")
+    var path: String = "."
+
+    @Flag(name: [.customLong("directories"), .customShort("d")], help: "Include directories")
+    var includeDirectories: Bool = false
+
+    @Flag(name: .shortAndLong, help: "Include hidden files/directories")
+    var includeHidden: Bool = false
+
+    @Option(name: .shortAndLong, help: "Filter the list of files and directories")
+    var filter: String?
+
+    mutating func run() throws {
+        print("-- \(try Folder(path: path).name) --")
+        if includeDirectories {
+            try printDirectories()
+        }
+        try printFiles()
+    }
+}
+
+private extension MyApp {
+
+    private func printFiles() throws {
+        var files = try Folder(path: path).files
+
+        if includeHidden {
+            files = files.includingHidden
+        }
+
+        for file in files {
+            if let filter, !file.name.contains(filter) {
+                continue
+            }
+            print(file.name)
+        }
+    }
+
+    private func printDirectories() throws {
+        var folders = try Folder(path: path).subfolders
+
+        if includeHidden {
+            folders = folders.includingHidden
+        }
+
+        for folder in folders {
+            if let filter, !folder.name.contains(filter) {
+                continue
+            }
+            print("[\(folder.name)]")
+        }
+    }
+}
+```
+We have some unnecessary duplication, but the code serves our purpose and the results are looking good:
 
 ```terminal
-$ swift run MyApp --directories
--- MyApp --
-[Sources]
-[Tests]
-Package.resolved
-Package.swift
-README.md
-
-$ swift run MyApp -id
-Building for debugging...
-Build complete! (0.12s)
+$ swift run MyApp -di
 -- MyApp --
 [.build]
 [.git]
@@ -278,9 +318,17 @@ Build complete! (0.12s)
 Package.resolved
 Package.swift
 README.md
+
+$ swift run MyApp -di -f git
+-- MyApp --
+[.git]
+.gitignore
 ```
 
-### Subcommands
+There's also [`@OptionGroup`](https://apple.github.io/swift-argument-parser/documentation/argumentparser/optiongroup) which is used to compile multiple parameters into a struct (conforming to `ParsableArguments`) for reusability, e.g. across multiple `Subcommand`s.  
+We look at subcommands in the next section and make use of `@OptionGroup` there.
+
+### Subcommands & Configuration
 
 For more complex applications, the ArgumentParser package lets you define [Subcommands](https://apple.github.io/swift-argument-parser/documentation/argumentparser/commandsandsubcommands) as part of the applications configuration.  
 
@@ -290,18 +338,63 @@ E.g. having an additional parameter-like keyword after the application's name, a
 $ MyApp subcommand --parameter
 ```
 
-This is controlled via a [`CommandConfiguration`](https://apple.github.io/swift-argument-parser/documentation/argumentparser/commandconfiguration) (also provided by `ArgumentParser`) object defined as a static variable on your base `ParsableCommand`.
+This is controlled via a [`CommandConfiguration`](https://apple.github.io/swift-argument-parser/documentation/argumentparser/commandconfiguration) object defined as a static property on your base `ParsableCommand`.  
+
+Just for illustration, I'll add a second command `name-length` to our existing tool, which will simply print out the character count of the names of files and directories in our list instead of the actual names.
 
 ```swift
 @main
 struct MyApp: ParsableCommand {
-
     static var configuration = CommandConfiguration(
-        abstract: "My awesome CLI tool.",
-        subcommands: [FirstSubcommand.self, SecondSubcommand.self],
-        defaultSubcommand: FirstSubcommand.self
+        abstract: "A neat little tool to list files and directories",
+        version: "1.2.3",
+        subcommands: [List.self, NameLength.self],
+        defaultSubcommand: List.self
     )
 }
+```
+
+With this, we just have to move our previous implementation to a newly created `List` type and can also utilized the aforementioned `@OptionGroup` to reuse all our arguments for the second command in `NameLength`.
+
+```swift
+struct GlobalOptions: ParsableArguments {
+    @Argument(help: "Path of the directory to be listed")
+    var path: String = "."
+
+    @Flag(name: [.customLong("directories"), .customShort("d")], help: "Include directories")
+    var includeDirectories: Bool = false
+
+    @Flag(name: .shortAndLong, help: "Include hidden files/directories")
+    var includeHidden: Bool = false
+
+    @Option(name: .shortAndLong, help: "Filter the list of files and directories")
+    var filter: String?
+}
+
+extension MyApp {
+    struct List: ParsableCommand {
+        @OptionGroup var args: GlobalOptions
+
+        // ...
+    }
+
+    struct NameLength: ParsableCommand {
+        @OptionGroup var args: GlobalOptions
+        
+        // ...
+    }
+```
+I've shortened the sample code here a bit, because the implementation of `NameLength` is almost identical to `List`.
+
+```terminal
+$ swift run MyApp name-length
+Building for debugging...
+[3/3] Linking MyApp
+Build complete! (0.73s)
+-- MyApp --
+16
+13
+9
 ```
 
 ### Parsing Arguments into more complex types
@@ -337,7 +430,7 @@ The package template already created a test target `MyAppTests` in `Package.swif
 {: .prompt-info }
 
 I can recommend having a look at the `TestHelpers` of the [`ArgumentParser` Repository](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift).
-Especially [`AssertExecuteCommand(command:, expected:)`](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift#L209-L213), which makes it really easy to execute a command and check for its expected output.
+Especially [`AssertExecuteCommand(command:, expected:)`](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift#L209-L213), which simplifies creating functional tests that execute a command and check for its expected output.
 
 ```swift
 func test_output() throws {
@@ -348,10 +441,18 @@ func test_output() throws {
 }
 ```
 
+## Excursion: Refactoring
+
+> TODO
+{: .prompt-warning }
+
+Now that I have some tests that are ensuring our app works as it should, I can improve some of the code 
+
 Distribution
 ------------
 
-
+> TODO
+{: .prompt-warning }
 
 ---
 
@@ -406,8 +507,8 @@ CommandLineApp.main()
 References
 ----------
 
-- [Apple Documentation](https://github.com/apple/swift-package-manager/tree/main/Documentation)
-- [Creating a Packge](https://github.com/apple/swift-package-manager/blob/main/Documentation/Usage.md#creating-a-package) (CLI tool, etc.)
+- [Apple Documentation (SPM)](https://github.com/apple/swift-package-manager/tree/main/Documentation)
+- [Creating a Package](https://github.com/apple/swift-package-manager/blob/main/Documentation/Usage.md#creating-a-package) (CLI tool, etc.)
 - [https://github.com/apple/swift-argument-parser](https://github.com/apple/swift-argument-parser)
 - [https://github.com/JohnSundell/Files](https://github.com/JohnSundell/Files)
 

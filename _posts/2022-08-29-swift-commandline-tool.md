@@ -506,17 +506,30 @@ func test_list_directoriesAndHidden() throws {
 }
 ```
 
-## Excursion: Refactoring
-
-> TODO
-{: .prompt-warning }
-
-Now that I have some tests that are ensuring our app works as it should, I can improve some of the code 
+You can check out the complete source code for this sample here.
+> TODO: add repo url
+{: .prompt-danger }
 
 Distribution
 ------------
 
-> TODO
+Distributing your app is also surprisingly easy with the help of [Mint](https://github.com/yonaskolb/mint), a package manager for executable Swift packages.
+
+If you have Mint installed, all you need to do is publish your package in a public repository on GitHub and run:
+
+```terminal
+mint install YOUR_ACCOUNT/APP_NAME
+mint run APP_NAME
+```
+
+> TODO: finish this section
+{: .prompt-warning }
+
+## Excursion: Refactoring
+
+Now that I have some tests that are ensuring our app works as it should, I can improve some of the code 
+
+> TODO: finish this section
 {: .prompt-warning }
 
 ---

@@ -104,6 +104,8 @@ Something that arguably every command-line app needs, are arguments. Rather than
 
 > If you'd rather roll your own argument parsing solution, you can do so by manually reading them from `CommandLine.arguments.dropFirst()`
 
+### Setup
+
 We add `.package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),`[^fn-latest-sap] to `Package.swift`'s `dependencies` in the same way as for `Files` above, but need to specify the exact product we want to add as a dependency for our `executableTarget`, because the product `ArgumentParser` has a different name than the package `swift-argument-parser` and can't be automatically inferred by SPM. 
 
 ```swift
@@ -143,6 +145,8 @@ struct MyApp: ParsableCommand {
 
 > `ArgumentParser`'s `ParsableCommand`s require a `run()` method that acts as the entry point for your command instead of the static `main()`
 {: .prompt-info }
+
+### Arguments, options and flags
 
 `ArgumentParser` uses property wrappers to declare its parsable parameters.  
 
@@ -397,7 +401,7 @@ Build complete! (0.73s)
 9
 ```
 
-### Parsing Arguments into more complex types
+### Parsing into complex types
 
 Date 
 https://forums.swift.org/t/support-for-date/34797
@@ -429,7 +433,7 @@ The package template already created a test target `MyAppTests` in `Package.swif
 > However the new test case seems more like a unit test than a functional test, to be honest...
 {: .prompt-info }
 
-I can recommend having a look at the `TestHelpers` of the [`ArgumentParser` Repository](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift).
+I can recommend to have a look at the `TestHelpers` of the [`ArgumentParser` Repository](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift).
 Especially [`AssertExecuteCommand(command:, expected:)`](https://github.com/apple/swift-argument-parser/blob/6f30db08e60f35c1c89026783fe755129866ba5e/Sources/ArgumentParserTestHelpers/TestHelpers.swift#L209-L213), which simplifies creating functional tests that execute a command and check for its expected output.
 
 ```swift
@@ -438,6 +442,67 @@ func test_output() throws {
         command: "MyApp",
         expected: "Hello, world!"
     )
+}
+```
+
+To test our tool in a functional way, let's create a temporary directory as a test environment.  
+
+We'll need the products directory where the unit tests are executed:
+
+```swift
+extension XCTest {
+    var productsDirectory: URL {
+      #if os(macOS)
+        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
+            return bundle.bundleURL.deletingLastPathComponent()
+        }
+        fatalError("couldn't find the products directory")
+      #else
+        return Bundle.main.bundleURL
+      #endif
+    }
+}
+```
+
+And then setup the directory and some dummy files:
+
+```swift
+final class MyAppTests: XCTestCase {
+    private var testFolder: Folder!
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+
+        let productsFolder = try Folder(path: productsDirectory.path)
+        testFolder = try productsFolder.createSubfolderIfNeeded(withName: "TestDirectory")
+        try testFolder.empty()
+        try testFolder.createSubfolder(at: "Subfolder")
+        try testFolder.createSubfolder(at: ".hiddenFolder")
+        try testFolder.createFile(at: ".hiddenFile")
+        try testFolder.createFile(at: "MyApp.swift")
+        try testFolder.createFile(at: "README.md")
+    }
+
+    override func tearDownWithError() throws {
+        try? testFolder.delete()
+        try super.tearDownWithError()
+    }
+```
+
+And then we can test our tool's arguments in various combinations against the expected terminal output. For example:
+
+```swift
+func test_list_directoriesAndHidden() throws {
+    let expected = """
+    -- TestDirectory --
+    [.hiddenFolder]
+    [Subfolder]
+    .hiddenFile
+    MyApp.swift
+    README.md
+    """
+    try AssertExecuteCommand(command: cmd + "-di " + testFolder.path, expected: expected)
+    try AssertExecuteCommand(command: cmd + "--directories --include-hidden " + testFolder.path, expected: expected)
 }
 ```
 

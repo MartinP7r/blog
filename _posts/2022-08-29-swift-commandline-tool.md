@@ -10,19 +10,16 @@ tags:
 date: 2022-08-25 12:46 +0900
 ---
 
-Intro
------
-
 > Updated for Swift 5.7 (Xcode 14)
 {: .prompt-info }
 
-This article walks through the steps of creating a simple command-line tool and solve common feature requirements with helpful open-source packages.  
-The finished tool will print out information about files and directories on the file system.  
+In this post I will walk through the steps of creating a simple command-line tool with Swift Package Manager.  
+The finished app will print out information about files and directories on the filesystem.  
 
 Setup
 -----
 
-Let's first create a Swift package:
+Let's first create a Swift package with the `executable` template:
 
 ```terminal
 $ mkdir MyApp && cd MyApp
@@ -57,7 +54,7 @@ let package = Package(
 ```
 {: file='Package.swift' }
 
-`MyApp.swift` is the templates entry-point and for now, we'll replace its `Hello, world!` content with some simple logic to print out the current directory's listing.
+`Sources/MyApp/MyApp.swift` is the `executable` template's entry-point. For now, we'll replace the `Hello, world!` sample with some simple logic to print out the current directory's listing.
 
 ```swift
 import Files

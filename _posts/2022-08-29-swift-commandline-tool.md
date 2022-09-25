@@ -520,12 +520,12 @@ mint install YOUR_ACCOUNT/APP_NAME
 mint run APP_NAME
 ```
 
-## Excursion: Refactoring
+<!-- ## Excursion: Refactoring
 
 Now that I have some tests that are ensuring our app works as it should, I can improve some of the code 
 
 > TODO: finish this section
-{: .prompt-warning }
+{: .prompt-warning } -->
 
 ---
 

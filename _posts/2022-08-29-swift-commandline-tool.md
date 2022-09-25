@@ -506,9 +506,7 @@ func test_list_directoriesAndHidden() throws {
 }
 ```
 
-You can check out the complete source code for this sample here.
-> TODO: add repo url
-{: .prompt-danger }
+You can check out the complete source code for this sample [here](https://github.com/MartinP7r/blog-content/tree/main/swift-commandline-tool/MyApp).
 
 Distribution
 ------------
@@ -521,9 +519,6 @@ If you have Mint installed, all you need to do is publish your package in a publ
 mint install YOUR_ACCOUNT/APP_NAME
 mint run APP_NAME
 ```
-
-> TODO: finish this section
-{: .prompt-warning }
 
 ## Excursion: Refactoring
 

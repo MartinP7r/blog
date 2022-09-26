@@ -94,7 +94,7 @@ That was really easy and already very exciting. 😎
 Swift Argument Parser
 ---------------------
 
-Something that arguably every command-line app needs, are arguments. Rather than implementing them from scratch, I'm going to use Apple's open-source package [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (I'm referring to this package as `ArgumentParser` below).
+Something that arguably every command-line app needs, are arguments the user can pass to it for different. Rather than implementing them from scratch, I'm going to use Apple's open-source package [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (I'm referring to this package as `ArgumentParser` below).
 
 > An alternative would be [`SwiftCLI`](https://github.com/jakeheis/SwiftCLI.git), which has been around longer, and provides nearly the same functionality.
 {: .prompt-info }
@@ -442,9 +442,11 @@ func test_output() throws {
 }
 ```
 
-To test our tool in a functional way, let's create a temporary directory as a test environment.  
+> It's not possible to add the helpers as a dependency from the official package repository, because Apple isn't ["ready to maintain that module as public API yet"](https://github.com/apple/swift-argument-parser/pull/303#issuecomment-827060128). I'm using a personal [fork](https://github.com/MartinP7r/swift-argument-parser/tree/testhelper_product) with the helper product enabled (which I'm maintaining on a best-effort basis 😅).
+{: .prompt-warning }
 
-We'll need the products directory where the unit tests are executed:
+To test our tool in a functional way, let's create a temporary directory as a test environment.  
+We will need to access the products directory where the unit tests are executed:
 
 ```swift
 extension XCTest {
@@ -461,7 +463,7 @@ extension XCTest {
 }
 ```
 
-And then setup the directory and some dummy files:
+And then setup a test directory with some dummy files:
 
 ```swift
 final class MyAppTests: XCTestCase {
@@ -486,7 +488,8 @@ final class MyAppTests: XCTestCase {
     }
 ```
 
-And then we can test our tool's arguments in various combinations against the expected terminal output. For example:
+Now we can test our tool's arguments in various combinations against the expected terminal output.  
+For example:
 
 ```swift
 func test_list_directoriesAndHidden() throws {
@@ -503,14 +506,15 @@ func test_list_directoriesAndHidden() throws {
 }
 ```
 
-You can check out the complete source code for this sample [here](https://github.com/MartinP7r/blog-content/tree/main/swift-commandline-tool/MyApp).
+> You can browse the complete source code for this sample app [here](https://github.com/MartinP7r/blog-content/tree/main/swift-commandline-tool/MyApp).
+{: .prompt-tip }
 
 Distribution
 ------------
 
 Distributing your app is also surprisingly easy with the help of [Mint](https://github.com/yonaskolb/mint), a package manager for executable Swift packages.
 
-If you have Mint installed, all you need to do is publish your package in a public repository on GitHub and run:
+If you have Mint installed, all you need to do is publish your package in a public repository with the same name on GitHub and run your tool with:
 
 ```terminal
 mint install YOUR_ACCOUNT/APP_NAME
@@ -550,7 +554,7 @@ struct MyApp {
 
 ### Sample Implementation using `main.swift` without `@main`
 
-see [https://developer.apple.com/swift/blog/?id=7](https://developer.apple.com/swift/blog/?id=7)
+<!-- see [https://developer.apple.com/swift/blog/?id=7](https://developer.apple.com/swift/blog/?id=7) -->
 
 ```swift
 import Darwin

@@ -96,10 +96,11 @@ Swift Argument Parser
 
 Something that arguably every command-line app needs, are arguments that the user can pass to it. Rather than implement them from scratch, I'm going to use Apple's open-source package [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (I'm referring to this package as `ArgumentParser` below).
 
-> An alternative would be [`SwiftCLI`](https://github.com/jakeheis/SwiftCLI.git), which has been around longer, and provides nearly the same functionality.
-{: .prompt-info }
+<!-- > An alternative would be [`SwiftCLI`](https://github.com/jakeheis/SwiftCLI.git), which has been around longer, and provides nearly the same functionality.
+{: .prompt-info } -->
 
 > If you'd rather roll your own argument parsing solution, you can do so by manually reading them from `CommandLine.arguments.dropFirst()`
+{: .prompt-tip }
 
 ### Setup
 

@@ -94,7 +94,7 @@ That was really easy and already very exciting. 😎
 Swift Argument Parser
 ---------------------
 
-Something that arguably every command-line app needs, are arguments the user can pass to it for different. Rather than implementing them from scratch, I'm going to use Apple's open-source package [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (I'm referring to this package as `ArgumentParser` below).
+Something that arguably every command-line app needs, are arguments that the user can pass to it. Rather than implement them from scratch, I'm going to use Apple's open-source package [Swift Argument Parser](https://github.com/apple/swift-argument-parser) (I'm referring to this package as `ArgumentParser` below).
 
 > An alternative would be [`SwiftCLI`](https://github.com/jakeheis/SwiftCLI.git), which has been around longer, and provides nearly the same functionality.
 {: .prompt-info }
@@ -116,7 +116,6 @@ We add `.package(url: "https://github.com/apple/swift-argument-parser", from: "1
 // ...
 ```
 {: file='Package.swift' }
-
 
 We import the module and conform our struct to `ParsableCommand`.
 
@@ -153,7 +152,7 @@ struct MyApp: ParsableCommand {
 
 Furthermore, a `--help` (`-h`) documentation for your command-line application is automatically generated.
 
-For our finished example, it will look like this:
+For our finished example, it will look something like this:
 
 ```terminal
 $ swift run MyApp -h

@@ -8,7 +8,7 @@ tags:
 - `some` specifies the use of an opaque type
 - `any` specifies the use of an existential type
 
-`any` is not mandatory at this point, but form Swift 6 onwards it's planned to result in an error if you fail to mark an existential type with it.
+`any` is not mandatory at this point, but from Swift 6 onwards it's planned to result in an error if you fail to mark an existential type with it.
 
 ```swift
 protocol Vehicle {
@@ -38,8 +38,6 @@ let vehicle2: Vehicle = Car() // <-- car stored in `Vehicle` "box", no static di
 
 ```
 
-
-
 ## List of articles about `some` and `any`
 
 - https://www.donnywals.com/whats-the-difference-between-any-and-some-in-swift-5-7/
@@ -47,7 +45,7 @@ let vehicle2: Vehicle = Car() // <-- car stored in `Vehicle` "box", no static di
 - https://onmyway133.com/posts/how-to-use-any-vs-some-in-swift/
 
 - https://www.hackingwithswift.com/swift/5.6/existential-any
-
+- https://swiftsenpai.com/swift/understanding-some-and-any/
 
 > An “existential type” allows us to say what kind of functionality we want a type to have rather than requesting something specific.[^fn-hws-existential]
 

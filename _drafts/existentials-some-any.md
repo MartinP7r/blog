@@ -27,7 +27,6 @@ func travel<T: Vehicle>(to destinations: [String], using vehicle: T) {
     }
 }
 
-
 let vehicle = Car() // <-- static dispatch possible because vehicle will always be of type car and the compiler knows it
 // vehicle.travel(to: "London")
 travel(to: ["London", "Amarillo"], using: vehicle)
@@ -35,7 +34,6 @@ travel(to: ["London", "Amarillo"], using: vehicle)
 let vehicle2: Vehicle = Car() // <-- car stored in `Vehicle` "box", no static dispatch possible
 // `Vehicle` here is an existential type
 // vehicle2.travel(to: "Glasgow")
-
 ```
 
 ## List of articles about `some` and `any`

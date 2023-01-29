@@ -16,9 +16,6 @@ lang: en
 # If it is not assigned, the site will use the value of 'lang' instead.
 content_lang: ""
 
-# Additional parameters for datetime localization, optional. › https://github.com/iamkun/dayjs/tree/dev/src/locale
-prefer_datetime_locale:
-
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
 timezone: Asia/Tokyo
 

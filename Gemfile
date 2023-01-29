@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "jekyll"
-gem "jekyll-theme-chirpy", "~> 5.2", ">= 5.2.1"
+gem "jekyll-theme-chirpy", "~> 5.4", ">= 5.4.0"
 
 group :jekyll_plugins do
   # gem "jekyll-twitter-plugin", "~> 2.1"
@@ -23,6 +23,3 @@ end
 
 # Performance-booster for watching directories on Windows
 gem "wdm", "~> 0.1.1", :install_if => Gem.win_platform?
-
-# Jekyll <= 4.2.0 compatibility with Ruby 3.0
-gem "webrick", "~> 1.7"

@@ -27,9 +27,7 @@ $ bundle update jekyll-theme-chirpy
 
 As the version upgrades, the critical files and configuration options will change. Please refer to the [Upgrade Guide](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide) to keep your website files in sync with the latest version of the theme.
 
-## License
-
-This work is published under [MIT][mit] License.
+## Theme
 
 [gem]: https://rubygems.org/gems/jekyll-theme-chirpy
 [chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/

@@ -22,7 +22,7 @@ class MyClass {
     let otherClass: OtherClass
 
     init() {
-        let url = Bundle.main.url(forResource: "som_file", withExtension: "json") 
+        let url = Bundle.main.url(forResource: "some_file", withExtension: "json") 
 
         // This will not work because url is optional
         otherClass = OtherClass(jsonURL: url)
@@ -39,7 +39,7 @@ In these cases, we want to continue the code as clean as possible, ideally *"fai
 
 ```swift
 init() {
-    guard let url = Bundle.main.url(forResource: "som_file", withExtension: "json") else {
+    guard let url = Bundle.main.url(forResource: "some_file", withExtension: "json") else {
         // 
     }
 
@@ -61,7 +61,7 @@ But if there's nothing coming after it, the compiler doesn't need to worry about
 
 ```swift
 init() {
-    guard let url = Bundle.main.url(forResource: "som_file", withExtension: "json") else {
+    guard let url = Bundle.main.url(forResource: "some_file", withExtension: "json") else {
         fatalError("Missing json file.") 
     }
 
@@ -82,7 +82,7 @@ Always evaluated => guarantees that execution will stop.
 
 ```swift
 init() {
-    guard let url = Bundle.main.url(forResource: "som_file", withExtension: "json") else {
+    guard let url = Bundle.main.url(forResource: "some_file", withExtension: "json") else {
         fatalError("Missing json file.") 
     }
 

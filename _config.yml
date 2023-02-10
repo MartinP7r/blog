@@ -105,7 +105,7 @@ comments:
     category: "Posts"
     category_id: "DIC_kwDOF3tnmc4CT_Mp"
     # mapping: # optional, default to 'pathname'
-    # input_position: # optional, default to 'bottom'
+    input_position: "top" # optional, default to 'bottom'
     # lang: # optional, default to the value of `site.lang`
 
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets

@@ -90,7 +90,7 @@ avatar: /assets/img/avatar.png
 toc: true
 
 comments:
-  active: gisqus
+  active: giscus
   disqus:
     shortname: "blog-martinp7r" # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
 

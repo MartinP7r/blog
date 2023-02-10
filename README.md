@@ -29,6 +29,8 @@ As the version upgrades, the critical files and configuration options will chang
 
 ## Theme
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+The amazing Chirpy Jekyll Theme  
+
+- [GitHub](https://github.com/cotes2020/jekyll-theme-chirpy)
+- [gem](https://rubygems.org/gems/jekyll-theme-chirpy)
+- [mit license](https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE)

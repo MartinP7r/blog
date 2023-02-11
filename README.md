@@ -1,5 +1,7 @@
 # Tech Blog
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/82213154-09e4-48b2-ada6-2d862c355bdd/deploy-status)](https://app.netlify.com/sites/angry-swartz-d5db56/deploys)
+
 ## TODO
 
 https://rbuchberger.github.io/jekyll_picture_tag/

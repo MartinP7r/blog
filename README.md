@@ -31,7 +31,7 @@ As the version upgrades, the critical files and configuration options will chang
 
 ## Theme
 
-The amazing Chirpy Jekyll Theme  
+The amazing Chirpy Jekyll Theme
 
 - [GitHub](https://github.com/cotes2020/jekyll-theme-chirpy)
 - [gem](https://rubygems.org/gems/jekyll-theme-chirpy)

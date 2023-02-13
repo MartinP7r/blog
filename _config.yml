@@ -92,7 +92,7 @@ toc: true
 comments:
   active: giscus
   disqus:
-    shortname: "blog-martinp7r" # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+    shortname: # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
 
   # utterances settings › https://utteranc.es/
   utterances:
@@ -101,7 +101,7 @@ comments:
   # Giscus options › https://giscus.app
   giscus:
     repo: martinP7r/blog # <gh-username>/<repo>
-    repo_id: 393963417
+    repo_id: MDEwOlJlcG9zaXRvcnkzOTM5NjM0MTc=
     category: "Posts"
     category_id: "DIC_kwDOF3tnmc4CT_Mp"
     # mapping: # optional, default to 'pathname'

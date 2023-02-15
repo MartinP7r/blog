@@ -5,6 +5,7 @@ category: [Snippets]
 tags: git tools
 date: 2021-09-18 17:59 +0900
 ---
+
 Here is an interesting way of amending (fixing) an older commit in Git.
 
 Sometimes I realize not right away that a file wasn't included in commit and I've already commited on top of it.

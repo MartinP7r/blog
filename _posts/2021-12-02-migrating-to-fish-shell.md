@@ -149,6 +149,7 @@ Packages that seem interesting, but I haven't had the time to look at, yet.
 - https://github.com/extrawurst/gitui
 - https://github.com/sharkdp/fd
 - https://github.com/muesli/duf
+  - maybe even better: https://github.com/Byron/dua-cli
 
 ## References
 

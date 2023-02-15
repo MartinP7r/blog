@@ -2,7 +2,11 @@
 layout: post
 title: Adding giscus comments to my blog
 category:
+- Articles
 tags:
+- tools
+- web
+date: 2023-02-15 14:32 +0900
 ---
 
 [Giscus](https://giscus.app/) is a service that enables you to have discussion-like comments and reactions on your website using GitHub's Discussion feature as a backend.  

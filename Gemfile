@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "jekyll"
-gem "jekyll-theme-chirpy", "~> 5.5", ">= 5.5.2"
+gem "jekyll-theme-chirpy", "~> 6.1"
 
 group :jekyll_plugins do
   # gem "jekyll-twitter-plugin", "~> 2.1"

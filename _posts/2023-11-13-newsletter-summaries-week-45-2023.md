@@ -1,16 +1,16 @@
 ---
 layout: post
-title: Newsletter Summaries Week 45 (2023)
+title: Swift News Summaries Week 45 (2023)
 category: Newsletter
-tags: 
+tags:
 - swift
 - swiftui
+date: 2023-11-13 16:34 +0900
 ---
-
 # Motivation
 
 I'm going to try something as a motivation to read more of the Swift/programming related newsletters I subscribe to.  
-I want to post some articles and socials about Swift/Apple/iOS programming I found throughout the week.
+So I want to post some articles, videos and socials about Swift/Apple/iOS programming I found throughout the week.
 This may not follow a specific schedule, but I want to try to get one out per week.
 
 # Summaries

@@ -3,10 +3,6 @@
 # Import the theme
 theme: jekyll-theme-chirpy
 
-# Only if your site type is GitHub Project sites and doesn't have a custom domain,
-# change below value to '/projectname'.
-baseurl: "/"
-
 # The language of the site layout › http://www.lingoes.net/en/translator/langcode.htm
 # Go to folder '_data/locales' to check the available language options
 lang: en
@@ -16,7 +12,7 @@ lang: en
 # If it is not assigned, the site will use the value of 'lang' instead.
 content_lang: ""
 
-# Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
+# Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
 timezone: Asia/Tokyo
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
@@ -29,7 +25,8 @@ tagline: Random notes and articles. Mostly about iOS & Swift
 description: >-
   Mostly random posts about development and tooling in Swift, iOS, web and more
 
-# fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
+# Fill in the protocol & hostname for your site.
+# e.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://blog.martinp7r.com"
 
 github:
@@ -117,9 +114,12 @@ assets:
     env: development # [development|production]
 
 pwa:
-  enabled: false # the option for PWA feature
+  enabled: true # false # the option for PWA feature
 
 paginate: 10
+
+# The base URL of your site
+baseurl: ""
 
 highlighter: rouge
 markdown: kramdown
@@ -195,13 +195,11 @@ compress_html:
 exclude:
   - "*.gem"
   - "*.gemspec"
-  - tools
   - docs
+  - tools
   - README.md
-  - CHANGELOG.md
   - LICENSE
   - rollup.config.js
-  - node_modules
   - package*.json
 
 jekyll-archives:

@@ -4,7 +4,7 @@ title:  "First Post"
 date:   2021-08-25 10:30:00 +0900
 mermaid: true
 image:
-  src: /assets/img/avatar.png
+  path: /assets/img/avatar.png
   width: 200 #1000   # in pixels
   height: 200 #400   # in pixels
   alt: image alternative text

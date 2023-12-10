@@ -13,7 +13,7 @@ PasteButton allows to paste content of a specified type from the clipboard witho
 
 The button only active when the system's Pasteboard (`UIPasteboard`) has an actual payload of the requested content type available for pasting. This helps users easily identify when the PasteButton can be utilized.
 
-<video controls="" autoplay="" name="media" width="720px"><source src="https://i.imgur.com/i4rUDSi.mp4" type="video/mp4"></video>
+<video controls="" autoplay="" name="media" width="720px" loop><source src="https://i.imgur.com/i4rUDSi.mp4" type="video/mp4"></video>
 
 While the PasteButton proves to be a useful addition to SwiftUI, it does have some limitations in terms of visual customization. Developers can modify the button's appearance using [`.buttonBorderShape(...)`](https://developer.apple.com/documentation/swiftui/view/buttonbordershape(_:)), [`labelStyle(_:)`](https://developer.apple.com/documentation/swiftui/view/labelstyle(_:)), and [`tint(_:)`](https://developer.apple.com/documentation/swiftui/view/tint(_:)-93mfq). Unfortunately, there doesn't seem to be an option to display just the paste icon symbol without a border.
 

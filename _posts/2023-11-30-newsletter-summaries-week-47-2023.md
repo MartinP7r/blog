@@ -1,8 +1,10 @@
 ---
 layout: post
 title: Newsletter Summaries Week 47 (2023)
-category:
+category: Newsletter
 tags:
+- swift
+- swiftui
 date: 2023-11-30 09:04 +0900
 ---
 ## SwiftData operations on background

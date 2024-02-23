@@ -13,6 +13,7 @@
 - type: rss
   icon: "fas fa-rss"
   noblank: true
+
 - type: mastodon
   icon: "fab fa-mastodon" # icons powered by <https://fontawesome.com/>
   url: "https://mastodon.social/@MartinP7r" # Fill with your mastodon account page

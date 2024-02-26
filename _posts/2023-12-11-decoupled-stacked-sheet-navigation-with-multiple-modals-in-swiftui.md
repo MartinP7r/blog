@@ -71,7 +71,7 @@ public enum SheetDestination: Identifiable {
 Inside our Router we only care about assigning the destinations to available sheets for presentation:
 ```swift
 @Observable
-Router {
+public class Router {
     public var presentedSheet: Sheet?
     public var presentedSheet2: Sheet?
 

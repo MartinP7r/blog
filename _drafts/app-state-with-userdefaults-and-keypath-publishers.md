@@ -9,9 +9,8 @@ tags:
   - ios
 ---
 
-Inspired by 
-https://swiftwithmajid.com/2019/09/04/modeling-app-state-using-store-objects-in-swiftui/
-
+It may be a bit late in light of Swift Concurrency and the new `@Observable` macro and people already announcing that Combine is dead 😆.  
+However, it seems that more complex observations, for example of [UserDefaults](https://twitter.com/dsteppenbeck/status/1690754716257644544?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1690754716257644544%7Ctwgr%5E%7Ctwcon%5Es1_c10&ref_url=) is still quite involved or maybe your app still needs to support ealier iOS version and can't afford to use the `Observation` framework, yet.
 
 ## Problem
 
@@ -20,6 +19,8 @@ https://swiftwithmajid.com/2019/09/04/modeling-app-state-using-store-objects-in-
 ## Solution
 
 Implement a separate notification pipeline for every settings value.
+
+This solution is partly inspired by an article on [**Swift with Majid**](https://swiftwithmajid.com/2019/09/04/modeling-app-state-using-store-objects-in-swiftui/). A great blog with many useful article about Swift and SwiftUI!
 
 ## Implementation
 
@@ -48,7 +49,6 @@ public final class SettingsStore: ObservableObject {
 }
 ```
 
-
 ```swift
 private func subscribeUpdates<T: Equatable>(
     for defaultsKeyPath: ReferenceWritableKeyPath<UserDefaults, T>
@@ -63,6 +63,7 @@ private func subscribeUpdates<T: Equatable>(
 ```
 
 A property on `SettingsStore` exposing the setting's value and 
+
 ```swift
 public var accentColor: AccentColor {
     get { AccentColor(rawValue: defaults.accentColor ?? "") ?? .blue }
@@ -72,8 +73,7 @@ public var accentColor: AccentColor {
 > The `AccentColor` type is a simple `enum`.
 {: .prompt-info }
 
-With the above in place, the only thing we need to do when we want to add a new persited property to our settings is to define the property on `UserDefaults` and `SettingsStore` and call the `subscribeUpdates(for:)` with the new keypath.
-
+With the above in place, the only thing we need to do when we want to add a new persisted property to our settings is to define the property on `UserDefaults` and `SettingsStore` and call the `subscribeUpdates(for:)` method with the new keypath.
 
 ## Appendix
 

@@ -2,7 +2,11 @@
 layout: post
 title: New PasteButton in iOS 16
 category:
+- Notes
+- iOS
 tags:
+- ios
+- swift
 date: 2023-11-25 15:45 +0900
 ---
 iOS 16 introduced a new SwiftUI button called [`PasteButton`](https://developer.apple.com/documentation/swiftui/pastebutton).

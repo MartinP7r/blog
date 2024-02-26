@@ -2,7 +2,12 @@
 layout: post
 title: Decoupled stacked sheet navigation with multiple modals in SwiftUI
 category:
+- Articles
+- iOS
 tags:
+- ios
+- swift
+- architecture
 date: 2023-12-11 08:36 +0900
 ---
 ## Problem
@@ -39,69 +44,94 @@ ContentView()
     }
 ```
 
-However, this limitation becomes particularly cumbersome for complex apps with features divided into separate modules, where it's imperative for the navigation to be decoupled. Ideally, subsequent screens should seamlessly transition without needing knowledge of the presenting view. Yet, in the absence of a `NavigationPath` equivalent for sheets, and considering the aforementioned error that arises when a sheet is already presented, implementing an elegant solution in SwiftUI's present state is not straightforward. 
+However, this limitation becomes particularly cumbersome for complex apps with features divided into separate modules, where it's imperative for the navigation to be decoupled. Ideally, subsequent screens should seamlessly transition without needing knowledge of the presenting view. Yet, in the absence of a `NavigationPath` equivalent for sheets, and considering the aforementioned error that arises when a sheet is already presented, finding a good solution in SwiftUI's present state is not straightforward.
 
-## First Iteration
+## Solution
 
-The basic navigation concept I'm using below is taken from the Icecubes Mastodon app. 
-It's [open-sourced on GitHub](https://github.com/Dimillian/IceCubesApp) and contains many more interesting architectural ideas.  
-I highly recommend checking it out!
+Our app has an onboarding view presented as a sheet at first launch. The onboarding view itself contains a button that presents a sheet with items the user may download. This is what we want to achieve:
+
+<center>
+<video controls="" autoplay="" name="media" width="250px" loop align="center"><source src="https://i.imgur.com/PkGdFiI.mp4" type="video/mp4"></video>
+</center>
+
+> The basic navigation concept of the example below with `Router` and `SheetDestination` is taken from the Icecubes Mastodon app.  
+> It's [open-sourced on GitHub](https://github.com/Dimillian/IceCubesApp) and contains many more interesting architectural ideas.  
+> I highly recommend checking it out!
+{: .prompt-info }
+
+We define the destinations within an `enum` inside a `Navigation` module that also holds our `Router`:
 
 ```swift
 public enum SheetDestination: Identifiable {
     case download
     case onboarding
-    // ...
 }
+```
 
-func registerSheet(
-    for destination: Binding<SheetDestination?>,
-    _ secondDestination: Binding<SheetDestination?>? = nil
-    // add more if needed
-) -> some View {
-    sheet(item: destination) { destination1 in
-        view(for: destination1)
-            .unwrap(secondDestination) { view1, destination2 in
-                view1
-                    .sheet(item: destination2) { destination2 in
-                        view(for: destination2)
-                    }
-            }
+Inside our Router we only care about assigning the destinations to available sheets for presentation:
+```swift
+@Observable
+Router {
+    public var presentedSheet: Sheet?
+    public var presentedSheet2: Sheet?
+
+    public func present(sheet: Sheet) {
+        if presentedSheet == nil {
+            presentedSheet = sheet
+        } else {
+            presentedSheet2 = sheet
+        }
     }
 }
+```
 
-@ViewBuilder
-private func view(for destination: SheetDestination) -> some View {
-    switch destination {
-    case .download: DownloadView()
-    case .onboarding: OnboardingView()
-    }
-}
+In our root app, we wire up the `Router` and sheet presentation, and decide which views to present for our destinations.
+```swift
+import Downloads
+import Navigation
+import Onboarding
 
-// call site: App root
+public struct MyApp: App {
+    @Bindable private var router = Router()
+
     public var body: some Scene {
         WindowGroup {
-            // ...
-            .registerSheet(
-                for: $router.presentedOnboardingScreen, 
-                $router.presentDownloadScreen
-            )
-            // ...
-
-// call site: module containing Onboarding view
-    Button("Open Downloads") {
-        router.presentedSheet2 = .download
+            ContentView()
+        ˆ       .sheet(item: $router.presentedSheet) { destination1 in
+                    view(for: destination1)
+                        .sheet(item: $router.presentedSheet2) { destination2 in
+                            view(for: destination2)
+                        }
+                }
+        }
+        .environment(router)
     }
+
+    @ViewBuilder
+    private func view(for destination: SheetDestination) -> some View {
+        switch destination {
+        case .download: DownloadView()
+        case .onboarding: OnboardingView()
+        }
+    }
+}
 ```
-<center>
-<video controls="" autoplay="" name="media" width="250px" loop align="center"><source src="https://i.imgur.com/PkGdFiI.mp4" type="video/mp4"></video>
-</center>
 
-Here the order of views and actual presentation is controlled by the upstream application which is allowed to "see" both of the feature modules. The separate modules for `OnboardingView` and `DownloadView` don't need to know about each other.  
+Wherever we want to present a view as a sheet from within our app we only need to import the `Navigation` module. In our example the separated `Onboarding` and `Downloads` modules don't need to know about each other. The only requirement is that they are both dependencies of the root app.
 
-This solution is obviously a little "dumb", and it would be nicer to have it actually scale and be dynamically applicable to as many sheets as we want to stack. So we could look into making that happen, perhaps with recursion and existential generics. The newly introduced variadic [Parameter Packs](https://github.com/apple/swift-evolution/blob/main/proposals/0393-parameter-packs.md) might be helpful as well.  
-However, when would we actually need more than 2 or 3 sheets stacked on each other?  
-So I think the manual way of just adding another parameter does the trick quite well and the signature of my method above is designed so it looks essentially like a variadic parameter at the call site. With no cost for the consumer if we actually choose to migrate it in the future.
+```swift
+import Navigation
+
+// ...
+
+@Environment(Router.self) private var router
+
+// ...
+
+Button("Open Downloads") {
+    router.present(sheet: .download)
+}
+```
 
 <!-- ## AnyView Nightmare
 

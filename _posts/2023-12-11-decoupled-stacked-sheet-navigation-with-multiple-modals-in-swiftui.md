@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Decoupled stacked sheet navigation with multiple modals in SwiftUI
+title: "Modularized SwiftUI: Stacked sheet navigation with multiple modals"
 category:
 - Articles
 - iOS
@@ -10,7 +10,6 @@ tags:
 - architecture
 date: 2023-12-11 08:36 +0900
 ---
-## Problem
 
 I don't think this is a particularly rare use case, but recently I wanted to implement two modal sheets where the second one is displayed on top of the first one.
 

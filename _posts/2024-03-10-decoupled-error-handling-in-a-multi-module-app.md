@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Decoupled error handling in a multi module app
+title: "Modularized SwiftUI: Error Handling & Alerts"
 category:
 - Articles
 - iOS

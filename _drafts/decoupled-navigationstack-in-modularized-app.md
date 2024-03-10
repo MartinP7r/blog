@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Decoupled NavigationStack in modularized app
+title: "Modularized SwiftUI: NavigationStack"
 category:
 - Articles
 - iOS

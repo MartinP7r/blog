@@ -9,12 +9,15 @@ tags:
 - swift
 - architecture
 mermaid: true
+date: 2024-03-10 10:29 +0900
 ---
-
 This is a second article in a short series about architecture concepts for apps with multiple small independent modules. You can find the previous article here: [Decoupled stacked sheet navigation with multiple modals in SwiftUI]({% link _posts/2023-12-11-decoupled-stacked-sheet-navigation-with-multiple-modals-in-swiftui.md %}).
 
-- consistent handling of errors
-- Define our own errors with localized user-facing messages:
+In this article, we focus on the consistent handling of errors across independent modules. And thereby enhancing the user experience and simplifying the development process.
+
+## Defining custom errors
+
+To start, we define our own errors with localized user-facing messages. This is achieved by conforming our error to the `LocalizedError` protocol.
 
 ```swift
 enum APIError: LocalizedError {
@@ -44,23 +47,17 @@ enum APIError: LocalizedError {
 ```
 {: file="SomeModule/APIError.swift" }
 
-
-Again, as in the previous article we have a `Router` that handles navigations and transitions
-
+A typically feature module will have logic that throws an error at some point. For example when trying to load data while the network connection is not available.
 
 ```swift
-import Navigation
-
 struct SomeView: View, Routable {
-    @Environment(Router.self) private var router
-
     var body: some View {
         Text("Hello, world!")
         .task {
             do {
                 try await load()
             } catch {
-                handle(error)
+              // handle the error
             }
         }
     }
@@ -73,36 +70,38 @@ struct SomeView: View, Routable {
 ```
 {: file="SomeModule/SomeView.swift" }
 
-- In a protocol that belongs to our root app we 
+Again, as in the previous article we have a `Router` that handles navigations and transitions. 
 
-[TODO: rewrite to switch]
 ```swift
-public protocol Routable: Observable {
-    var router: Router { get }
-    func handle(_ error: Error)
-}
+import Observation
 
 @MainActor
-public extension Routable {
-    func handle(_ error: Error) {
-        if let error = error as? APIError {
-            // Handling specific errors
-            router.showAlert(for: error)
-        } else if let error = error as? LocalizedError {
-            // Handling all other localized errors
-            #if DEV
-                router.showAlert(for: error)
-            #endif
-        } else {
-            // handle the rest (e.g. with logging only)
+@Observable
+public class Router {
+    public init() {}
+    public var presentedError: LocalizedError?
+
+    public var showingAlert: Bool {
+        get {
+            presentedError != nil
         }
+        set {
+            if !newValue {
+                presentedError = nil
+            }
+        }
+    }
+
+    public func showAlert(for error: LocalizedError) {
+        presentedError = error
     }
 }
 ```
-{: file="Navigation/Routable.swift" }
+{: file="Navigation/Router.swift" }
 
+At the root of our app, we inject the `Router` observable into the apps environment and wire up the alert presentation logic in a single point.
 ```swift
-import Router
+import Navigation
 
 public struct MyApp: App {
     @Bindable private var router = Router()
@@ -132,32 +131,80 @@ public struct MyApp: App {
 ```
 {: file="MyApp.swift" }
 
+This would require some redundant error handling code in our module view.  
+
 ```swift
-import Observation
+import Navigation
 
-@MainActor
-@Observable
-public class Router {
-    public init() {}
-    public var presentedError: LocalizedError?
+struct SomeView: View, Routable {
+    @Environment(Router.self) private var router
 
-    public var showingAlert: Bool {
-        get {
-            presentedError != nil
-        }
-        set {
-            if !newValue {
-                presentedError = nil
+    var body: some View {
+        Text("Hello, world!")
+        .task {
+            do {
+                try await load()
+            } catch {
+                handle(error)
             }
         }
     }
 
-    public func showAlert(for error: LocalizedError) {
-        presentedError = error
+    // ...
+
+    func handle(_ error: Error) {
+        if let error = error as? LocalizedError {
+            router.showAlert(for: error)
+        } else {
+            // handle other errors (e.g. with logging only)
+        }
     }
 }
 ```
-{: file="Navigation/Router.swift" }
+{: file="SomeModule/SomeView.swift" }
+
+But if we extract that part into a view extension of our `Navigation` module, it can be shared with all feature modules:
+
+```swift
+public protocol Routable: Observable {
+    var router: Router { get }
+    func handle(_ error: Error)
+}
+
+@MainActor
+public extension Routable {
+    func handle(_ error: Error) {
+        if let error = error as? LocalizedError {
+            router.showAlert(for: error)
+        } else {
+            // handle other errors (e.g. with logging only)
+        }
+    }
+}
+```
+{: file="Navigation/Routable.swift" }
+
+```swift
+import Navigation
+
+struct SomeView: View, Routable {
+    @Environment(Router.self) private var router
+
+    var body: some View {
+        Text("Hello, world!")
+        .task {
+            do {
+                try await load()
+            } catch {
+                handle(error)
+            }
+        }
+    }
+}
+```
+{: file="SomeModule/SomeView.swift" }
+
+## Sharing Errors Across Modules
 
 Now, this is all well and good for cases where our errors are only used in the modules they are defined in.  
 But what if we have an error that is better reused across multiple modules.  
@@ -175,10 +222,9 @@ FeatureA --> SharedError
 FeatureB --> SharedError
 ```
 
-And if we want to handle some errors differently than others?
-
-We can do the following.  
-Move the 
+What if we want to handle some errors differently than others?
+We can move the specific errors one step deeper into our dependency graph as a dependency of `Navigation`.
+Which allows handle them as needed without the feature models needing to know about our navigation logic.
 
 ```swift
 import SharedError
@@ -191,7 +237,8 @@ func handle(_ error: Error) {
         router.showAlert(for: apiError)
 
     case let localizedError as LocalizedError:
-        #if DEV
+        // Bonus: with the pragma below, we show unspecified alerts only for debugging and testing
+        #if DEV  
             router.showAlert(for: localizedError)
         #else
             break
@@ -222,3 +269,9 @@ graph LR
  FeatureC --> Navigation
 Navigation --> SharedError
 ```
+
+## Conclusion
+
+By adopting a consistent and modular approach to error handling, we can significantly improve the user experience of our apps. This strategy not only simplifies development but also enhances the app's robustness and maintainability. As we continue to explore the architecture of apps with multiple small, independent modules, we'll discover more ways to leverage SwiftUI and Swift's powerful features to build sophisticated and user-friendly applications.
+
+Stay tuned for more insights into SwiftUI and app architecture in our upcoming articles.

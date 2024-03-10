@@ -20,7 +20,9 @@ timezone: Asia/Tokyo
 
 title: Martin's Tech Journal
 
-tagline: Random notes and articles. Mostly about iOS & Swift
+tagline: >-
+  Articles, notes, and snippets. 
+  Mostly about iOS & Swift.
 
 description: >-
   Mostly random posts about development and tooling in Swift, iOS, web and more

@@ -54,7 +54,7 @@ Our app has an onboarding view presented as a sheet at first launch. The onboard
 <video controls="" autoplay="" name="media" width="250px" loop align="center"><source src="https://i.imgur.com/PkGdFiI.mp4" type="video/mp4"></video>
 </center>
 
-> The basic navigation concept of the example below with `Router` and `SheetDestination` is taken from the Icecubes Mastodon app.  
+> The basic navigation concept of the example below with `Router` and `SheetDestination` is inspired by the Icecubes Mastodon app.  
 > It's [open-sourced on GitHub](https://github.com/Dimillian/IceCubesApp) and contains many more interesting architectural ideas.  
 > I highly recommend checking it out!
 {: .prompt-info }

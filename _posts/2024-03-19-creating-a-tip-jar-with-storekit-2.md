@@ -26,7 +26,8 @@ Let's build such a "paywall" for a buy-me-a-coffee use case with the new StoreKi
 
 ## StoreKit
 
-We create our products either on App Store Connect or through the new store configuration file inside Xcode.  
+We create the new store configuration file, and our products either through this configuration file inside Xcode or directly on App Store Connect.  
+It is possible to synchronize the products you create on either one via a button in Xcode.
 
 ![](https://i.imgur.com/rSrSV85.png)
 

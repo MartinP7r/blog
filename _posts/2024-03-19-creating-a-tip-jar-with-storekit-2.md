@@ -185,7 +185,7 @@ var placeholderImage: some View {
 ```
 {: file="PaywallView.swift" }
 
-![](https://i.imgur.com/2ZOYBZz.png)
+![](https://i.imgur.com/2ZOYBZz.png){: width="350" }
 
 
 ## Conclusion

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Creating a tip jar with StoreKit 2, previews, and remote assets
+title: Creating a tip jar with StoreKit 2, Xcode Previews, and remote assets
 category:
 - Articles
 - iOS
@@ -10,17 +10,19 @@ tags:
 - StoreKit
 image:
   path: https://i.imgur.com/MiJYLu8.png
-  width: 1000   # in pixels
-  height: 400   # in pixels
+  width: 1000
+  height: 400
   alt: Developer Tip Jar for iOS
+date: 2024-03-19 05:08 +0900
 ---
-
 The new StoreKit 2 supports [StoreKit configuration files for local development](https://developer.apple.com/documentation/xcode/setting-up-storekit-testing-in-xcode/)
 which means, among other things, that you can test your in-app purchases without a network connection and without even submitting them to the App Store.
 
-It also provides new SwiftUI views ([`StoreView`](https://developer.apple.com/documentation/storekit/storeview/), [`ProductView`](https://developer.apple.com/documentation/storekit/productview), and [SubscriptionStoreView](https://developer.apple.com/documentation/storekit/subscriptionstoreview)) which enable low-code implementation of in-app purchases with some room for customizations.
+It also provides new SwiftUI views ([`StoreView`](https://developer.apple.com/documentation/storekit/storeview/), [`ProductView`](https://developer.apple.com/documentation/storekit/productview), and [`SubscriptionStoreView`](https://developer.apple.com/documentation/storekit/subscriptionstoreview)) which enable a low-code implementation of in-app purchases and paywalls with some room for customizations.
 
-A common scenario that we don't want to spend a lot of time on is a tip jar for smaller side projects. Let's build a "paywall" for such a buy-me-a-coffee use case with the new StoreKit APIs!
+As developers, a common scenario that we may not want to spend a lot of time on is a "tip jar" for smaller side projects. There may be users out there grateful enough for the utility it provides, but we just don't think it's worth the effort of implementing in-app purchases just for a hobby project.
+
+Let's build such a "paywall" for a buy-me-a-coffee use case with the new StoreKit APIs!
 
 ## StoreKit
 
@@ -28,7 +30,7 @@ We create our products either on App Store Connect or through the new store conf
 
 ![](https://i.imgur.com/rSrSV85.png)
 
-We have a simple model for the products:
+Here we have a simple model for the products:
 
 ```swift
 enum Coffee: Identifiable, CaseIterable {
@@ -90,6 +92,10 @@ public struct PaywallView: View {
 ```
 {: file="PaywallView.swift" }
 
+It could actually be even easier than the above. We would only need to initalize `StoreView` with our product IDs instead of the `ForEach` block and StoreKit 2 would do the rest for us.  
+
+But I created a couple of cute AI generated images for our tip jar, so I'm using `ProductView` to customize and give some flair to the paywall.
+
 ![](https://i.imgur.com/sYzplPQ.png){: width="350" }
 
 ## Previews
@@ -105,8 +111,8 @@ With the new `#Preview` macros, creating a SwiftUI preview for this is as simple
 ```
 {: file="PaywallView.swift" }
 
-However, because we are using a StoreKit configuration file, we need to tell Xcode to use it for our preview builds, to be able to show our products in the previews.  
-This also works for Swift Packages, which I am using in my example below. You just need to set the `StoreKit Configuration` file in the scheme's `Run` settings as seen below:
+However, because we are using a StoreKit configuration file, we need to tell Xcode to use it for our preview builds, to have our products show up in the previews.  
+This also works for Swift Packages, which I am using in my example below. You just need to set the `StoreKit Configuration` file in the target scheme's `Run` settings as seen below:
 
 ![](https://i.imgur.com/cmqnuCX.png)
 
@@ -117,7 +123,7 @@ Since we wanted to make it look somewhat pretty, it now has some images.
 And frankly, those cute generative AI images take up quite some space, blowing up our app binary's size. 😅
 
 So let's load them from a server as needed.  
-I'm kinda cheap, so I'm going to use [imgur](imgur.com) for this one, but the implementation should be the same for your use case.
+I'm kinda cheap, so I'm going to use [imgur](imgur.com) to host them, but the implementation should be the same for your use case.
 
 We add a computed URL for our image assets:
 
@@ -167,7 +173,7 @@ ProductView(id: coffee.id) {
 ```
 {: file="PaywallView.swift" }
 
-The placeholder ensures that there's an image there no matter what. In this case I'm using SF Symbols as a stand-in.
+The placeholder ensures that there's an image displayed no matter what. In this case I'm using SF Symbols as a stand-in.
 
 ```swift
 var placeholderImage: some View {
@@ -184,7 +190,7 @@ var placeholderImage: some View {
 
 ## Conclusion
 
-In this post we learned how to easily implement a paywall for our side-projects and how to improve our development speed by utilizing StoreKit configuration files for local development, Xcode live previews for faster iteration even with StoreKit contents, and load remote assets with `AyncImage` for a smaller binary size.
+In this post we learned how to easily implement a paywall for our side-projects and how to save some time by utilizing StoreKit configuration files for local development, Xcode live previews for faster iteration even with StoreKit contents, and load remote assets with `AyncImage` for a smaller binary size.
 
 Oh, and by the way. If you like this post and want to support my blog, please consider a tip! 😜
 

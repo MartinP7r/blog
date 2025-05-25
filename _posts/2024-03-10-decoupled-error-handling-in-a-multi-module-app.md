@@ -224,7 +224,7 @@ FeatureB --> SharedError
 
 What if we want to handle some errors differently than others?
 We can move the specific errors one step deeper into our dependency graph as a dependency of `Navigation`.
-Which allows handle them as needed without the feature models needing to know about our navigation logic.
+With this separation our feature modules won't need to know about the navigation logic.
 
 ```swift
 import SharedError

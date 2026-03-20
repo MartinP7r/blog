@@ -16,7 +16,11 @@
 
 - type: mastodon
   icon: "fab fa-mastodon" # icons powered by <https://fontawesome.com/>
-  url: "https://mastodon.social/@MartinP7r" # Fill with your mastodon account page
+  url: "https://mastodon.social/@MartinP7r"
+
+- type: bluesky
+  icon: "fab fa-bluesky"
+  url: "https://bsky.app/profile/martinp7r.com"
 # Uncomment and complete the url below to enable more contact options
 # -
 #   type: linkedin
